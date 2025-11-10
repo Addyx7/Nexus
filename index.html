@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus - Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="neu-icon">
+                    <div class="icon-inner">
+<img src="logo.jpeg" alt="Logo" style="width:114px; height:114px; object-fit:contain;">
+
+                    </div>
+                </div>
+                <h2>Sign in To Nexus</h2>
+            </div>
+            
+            <form class="login-form" id="loginForm" novalidate>
+
+
+<button 
+  type="button" 
+  class="neu-button login-btn" 
+  onclick="window.location.href='dashboard.html'"
+  style="display:flex;align-items:center;justify-content:center;gap:8px;"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" fill="#e6cf89" viewBox="0 3 21 21" width="37" height="37">
+    <path d="M9.04 15.52L8.85 18.9c.36 0 .52-.16.71-.35l1.7-1.62 3.53 2.6c.65.36 1.1.17 1.27-.6l2.31-10.86.01-.01c.2-.95-.35-1.32-.97-1.1L4.66 9.84c-.93.36-.91.87-.16 1.1l3.22 1.01 7.49-4.72c.35-.23.67-.1.41.13l-6.18 5.86z"/>
+  </svg>
+  <span class="btn-text" style="color:#f4f0b0;font-weight:800;">Continue with Telegram</span>
+</button>
+
+
+    
+    <div class="btn-loader">
+        <div class="neu-spinner"></div>
+    </div>
+</button>
+
+            </form>
+
+            <div class="divider">
+                <div class="divider-line"></div>
+            </div>
+
+  <div class="social-login">
+  <!-- Discord -->
+  <button type="button" class="social-btn neu-social">
+    <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+      <path d="M20.317 4.369a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.078.037c-.211.375-.444.864-.608 1.249a18.27 18.27 0 0 0-5.468 0 12.64 12.64 0 0 0-.617-1.249.077.077 0 0 0-.078-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.583.099 18.056a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.02.078.078 0 0 0 .084-.027c.462-.63.873-1.295 1.226-1.993a.076.076 0 0 0-.041-.104 12.304 12.304 0 0 1-1.752-.83.077.077 0 0 1-.008-.129c.118-.09.236-.183.349-.278a.074.074 0 0 1 .077-.01c3.664 1.675 7.624 1.675 11.244 0a.074.074 0 0 1 .078.009c.113.095.23.189.349.279a.077.077 0 0 1-.006.128 11.63 11.63 0 0 1-1.753.829.076.076 0 0 0-.04.105c.36.698.77 1.362 1.225 1.992a.077.077 0 0 0 .084.028 19.9 19.9 0 0 0 6.002-3.02.077.077 0 0 0 .031-.055c.5-5.177-.838-9.68-3.548-13.661a.061.061 0 0 0-.031-.027ZM8.02 15.334c-1.182 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.419 0 1.334-.955 2.419-2.157 2.419Zm7.975 0c-1.182 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.419 0 1.334-.946 2.419-2.157 2.419Z"/>
+    </svg>
+  </button>
+
+  <!-- Telegram (resized and centered properly) -->
+  <button type="button" class="social-btn neu-social">
+    <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22" style="transform:scale(1.6);">
+      <path d="M9.04 15.52L8.85 18.9c.36 0 .52-.16.71-.35l1.7-1.62 3.53 2.6c.65.36 1.1.17 1.27-.6l2.31-10.86.01-.01c.2-.95-.35-1.32-.97-1.1L4.66 9.84c-.93.36-.91.87-.16 1.1l3.22 1.01 7.49-4.72c.35-.23.67-.1.41.13l-6.18 5.86z"/>
+    </svg>
+  </button>
+
+  <!-- Twitter (updated to modern X logo) -->
+  <button type="button" class="social-btn neu-social">
+    <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+      <path d="M18.244 2H21.5l-7.5 8.571L22 22h-6.172l-4.744-6.238L5.77 22H2.5l8.071-9.214L2 2h6.338l4.27 5.662L18.244 2Zm-2.145 17.138h1.19L8.045 4.77H6.748l9.351 14.368Z"/>
+    </svg>
+  </button>
+</div>
+
+           
+
+        </div>
+    </div>
+<div class="bg-abstract">
+    <div class="bg-blob"></div>
+    <div class="bg-blob"></div>
+    <div class="bg-blob"></div>
+    <div class="bg-blob"></div>
+</div>
+    <script src="../../shared/js/form-utils.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>
