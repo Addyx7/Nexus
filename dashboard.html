@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SolBundler Nexus</title>
+  <link rel="stylesheet" href="style1.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body>
+  <!-- CUSTOM CURSOR (EXACT SHAPE YOU WANTED) -->
+ <div class="cursor-custom">
+  <svg class="cursor-shape" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 2 L20 12 L13.5 14 L11 22 Z" />
+  </svg>
+  <div class="cursor-core"></div>
+</div>
+
+<div class="cursor-spotlight"></div>
+<div class="mesh-bg"></div>
+
+
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <img src="logo.jpeg" alt="Solana" class="sol-logo">
+      <span class="logo-text">NEXUS</span>
+    </div>
+    <nav class="nav">
+      <button class="nav-btn active" data-page="dashboard">
+        <i data-lucide="layout-dashboard"></i> Dashboard
+      </button>
+      <button class="nav-btn" data-page="bundles">
+        <i data-lucide="package"></i> Bundles
+      </button>
+      <button class="nav-btn" data-page="wallets">
+        <i data-lucide="wallet"></i> Wallets
+      </button>
+      <button class="nav-btn create">
+        <i data-lucide="plus-circle"></i> Create Bundle
+      </button>
+    </nav>
+  </header>
+
+  <!-- Main -->
+  <main class="container">
+    <!-- Welcome -->
+    <section class="card welcome-card">
+      <div class="welcome-header">
+        <h2>Welcome Back!</h2>
+        <p>Sunday, November 9, 2025</p>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <i data-lucide="rocket" class="stat-icon"></i>
+          <div class="stat-value">5</div>
+          <div class="stat-label">Bundles Launched</div>
+        </div>
+        <div class="stat-item">
+          <i data-lucide="wallet" class="stat-icon"></i>
+          <div class="stat-value">4</div>
+          <div class="stat-label">Active Wallets</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value1"><img src="sol.svg" alt="SOL" class="sol-logo"> 0.00</div>
+          <div class="stat-label">Volume Bundled</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Metrics Grid -->
+    <section class="metrics-grid">
+      <!-- Earnings Chart -->
+      <div class="card chart-card bundle-wider">
+        <h3 class="chart-title"><i data-lucide="trending-up"></i> Estimated Earnings</h3>
+        <canvas id="bundleChart"></canvas>
+      </div>
+
+      <!-- Recent Bundles -->
+      <div class="card project-card">
+        <div class="card-header">
+          <h3><i data-lucide="history"></i> Recent Bundles</h3>
+          <a href="#" class="view-all">View All <i data-lucide="arrow-right"></i></a>
+        </div>
+        <div class="project-list">
+          <div class="project-item">
+            <div class="project-info">
+              <div class="project-avatar">
+                <img src="https://images.pump.fun/coin-image/Cu2wLw35QZGEpkTqqzJaM79ymdJ5GRaBFE1uTesbpump?variant=600x600&ipfs=bafkreif6orpadoyh2w4qonogfrobd53uvqdwkbguluhotqhga7tgihusmm&src=https%3A%2F%2Fpump.mypinata.cloud%2Fipfs%2Fbafkreif6orpadoyh2w4qonogfrobd53uvqdwkbguluhotqhga7tgihusmm" alt="">
+              </div>
+              <div>
+                <div class="project-name">Pulse Bundle</div>
+                <div class="project-status pending"><i data-lucide="clock"></i> Pending</div>
+              </div>
+            </div>
+            <div class="project-earn profit"><img src="sol.svg" class="sol-icon-tiny">+0.00 SOL</div>
+          </div>
+          <div class="project-item">
+            <div class="project-info">
+              <div class="project-avatar">
+                <img src="https://images.pump.fun/coin-image/8ABYcdikwxugExgHNF79f6u9jyqQqrUtBCZYTaUbpump?variant=600x600&ipfs=bafybeidpmof6wly7e6jifnvfxthxfep53rz47u3m2nwq2gdovmqtz2m6xi&src=https%3A%2F%2Fpump.mypinata.cloud%2Fipfs%2Fbafybeidpmof6wly7e6jifnvfxthxfep53rz47u3m2nwq2gdovmqtz2m6xi" alt="">
+              </div>
+              <div>
+                <div class="project-name">Project 4</div>
+                <div class="project-status live"><i data-lucide="zap"></i> Live</div>
+              </div>
+            </div>
+            <div class="project-earn profit"><img src="sol.svg" class="sol-icon-tiny">+11.8 SOL</div>
+          </div>
+          <div class="project-item">
+            <div class="project-info">
+              <div class="project-avatar">
+                <img src="https://images.pump.fun/coin-image/QhavkpxuoVvdoNtiZUgM1hNBPKNA6a4WYxDLyD6QqVx?variant=600x600&ipfs=QmeSzchzEPqCU1jwTnsipwcBAeH7S4bmVvFGfF65iA1BY1&src=https%3A%2F%2Fpump.mypinata.cloud%2Fipfs%2FQmeSzchzEPqCU1jwTnsipwcBAeH7S4bmVvFGfF65iA1BY1" alt="">
+              </div>
+              <div>
+                <div class="project-name">Chap SHO</div>
+                <div class="project-status completed"><i data-lucide="check-circle"></i> Completed</div>
+              </div>
+            </div>
+            <div class="project-earn profit"><img src="sol.svg" class="sol-icon-tiny">+1.52 SOL</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Status Bar -->
+  <div class="status-bar">
+    <div class="price-box">
+      <img src="sol.svg" alt="SOL" class="sol-icon-tiny">
+      <span>SOL: $0.00</span>
+    </div>
+    <div class="conn-box">
+      <span class="status-dot"></span>
+      <span>Telegram Connected</span>
+    </div>
+  </div>
+
+  <script src="script1.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
