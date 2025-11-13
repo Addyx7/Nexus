@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mint | SolBundler Nexus</title>
+  <link rel="stylesheet" href="style1.css" />
+  <link rel="stylesheet" href="mint.css" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body>
+  <!-- CURSOR -->
+  <div class="cursor-custom">
+    <svg class="cursor-shape" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2">
+      <path d="M3 2 L20 12 L13.5 14 L11 22 Z" />
+    </svg>
+    <div class="cursor-core"></div>
+  </div>
+  <div class="cursor-spotlight"></div>
+  <div class="mesh-bg"></div>
+
+  <!-- PANEL HEADER -->
+  <div class="panel-header">
+    <button class="back-btn" onclick="history.back()">
+      <i data-lucide="arrow-left"></i>
+    </button>
+    <h3 class="panel-title">
+      <i data-lucide="folder-cog" class="title-icon"></i>
+      <span id="dynamicTitle">Project Creation | Mint</span>
+    </h3>
+  </div>
+
+  <!-- MAIN -->
+  <main class="mint-container">
+    <!-- TABS --><br>
+    <div class="mint-tabs">
+      <button class="tab-btn active" data-tab="mint">
+        <i data-lucide="gem"></i> <span>Mint</span>
+      </button>
+      <button class="tab-btn" data-tab="comment">
+        <i data-lucide="message-circle"></i> <span>Comment</span>
+      </button>
+      <button class="tab-btn" data-tab="sell">
+        <i data-lucide="shopping-cart"></i> <span>Sell</span>
+      </button>
+    </div>
+
+
+    <!-- MINT TAB -->
+    <div id="mint-tab" class="tab-content active">
+      <!-- Wallet Upload -->
+      <div class="card glass-card">
+        <div class="card-header">
+          <h3><i data-lucide="wallet"></i> Wallet Bundle</h3>
+          <div class="status-badge" id="walletStatus">
+            <i data-lucide="circle" class="badge-icon"></i> No file
+          </div>
+        </div>
+        <div class="upload-area" id="uploadArea">
+          <div class="upload-content" id="uploadContent">
+            <div class="upload-icon-wrapper">
+              <i data-lucide="upload-cloud" class="upload-icon"></i>
+            </div>
+            <p class="upload-title">Drop <strong>wallets.txt</strong> here</p>
+            <p class="upload-subtitle">or click to select</p>
+            <input type="file" id="walletFileInput" accept=".txt" hidden />
+          </div>
+        </div>
+        <button id="verifyWalletsBtn" class="btn-primary full-width" disabled>
+          <i data-lucide="shield-check"></i> Verify Wallets
+        </button>
+      </div>
+
+      <!-- Token Form -->
+      <div class="card glass-card mt-6">
+        <div class="card-header">
+          <h3><i data-lucide="settings"></i> Token Details</h3>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Name <span class="required">*</span></label>
+            <input type="text" id="tokenName" placeholder="Nebula Cat" maxlength="32" />
+            <div class="char-count" id="nameCount">0/32</div>
+          </div>
+          <div class="form-group">
+            <label>Symbol <span class="required">*</span></label>
+            <input type="text" id="tokenSymbol" placeholder="NEBULA" maxlength="10" />
+            <div class="char-count" id="symbolCount">0/10</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Description <span class="required">*</span></label>
+          <textarea id="tokenDesc" rows="3" placeholder="Elite cat on Solana..."></textarea>
+          <div class="char-count" id="descCount">0/280</div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Twitter</label>
+            <input type="url" id="twitter" placeholder="https://twitter.com/nebula" />
+          </div>
+          <div class="form-group">
+            <label>Telegram</label>
+            <input type="url" id="telegram" placeholder="https://t.me/nebula" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Website</label>
+          <input type="url" id="website" placeholder="https://nebula.cat" />
+        </div>
+
+        <!-- IMAGE UPLOAD -->
+        <div class="form-group">
+          <label>Token Image <span class="required">*</span></label>
+          <div class="image-upload" id="imageUpload">
+            <img id="previewImg" src="" alt="" style="display:none;" />
+            <div class="upload-placeholder" id="imagePlaceholder">
+              <i data-lucide="image"></i>
+              <p>Choose file</p>
+              <p class="upload-hint">JPG, PNG, GIF · Max 5 MB</p>
+            </div>
+            <input type="file" id="imageInput" accept="image/*" hidden />
+          </div>
+          <div class="file-info" id="imageInfo" style="display:none;"></div>
+        </div>
+
+     <br>   <!-- LAUNCH BUTTON (AESTHETIC GOLD) -->
+<div id="createSection">
+<button id="verifyWalletsBtn" class="create" disabled>
+  <i data-lucide="rocket"></i> Launch Token
+</button>
+
+</div>
+<br>
+      </div>
+    </div>
+
+    <!-- COMMENT TAB -->
+    <div id="comment-tab" class="tab-content">
+      <div class="card glass-card">
+        <div class="card-header">
+          <h3><i data-lucide="message-circle"></i> Auto Comment</h3>
+          <div class="status-badge" id="commentStatus">
+            <i data-lucide="circle" class="badge-icon"></i> Idle
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Comment Message <span class="required">*</span></label>
+          <textarea id="commentMsg" rows="4" placeholder="LFG! Just minted 10K $NEBULA!"></textarea>
+          <div class="char-count" id="commentCount">0/280</div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Delay Between Comments</label>
+            <div class="input-with-unit">
+              <input type="number" id="commentDelay" value="3000" min="1000" step="100" />
+              <span class="unit">ms</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Max Comments per Wallet</label>
+            <input type="number" id="maxComments" value="3" min="1" max="10" />
+          </div>
+        </div>
+
+        <!-- CHECKLIST (AESTHETIC) -->
+        <div class="checklist-group">
+          <label class="checklist-item">
+            <input type="checkbox" id="commentOnPump" checked />
+            <span class="checkmark"></span>
+            <span class="label-text">Comment on Pump.fun</span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox" id="commentOnRaydium" />
+            <span class="checkmark"></span>
+            <span class="label-text">Comment on Raydium</span>
+          </label>
+        </div>
+
+        <button id="startCommentBtn" class="btn-primary full-width" disabled>
+          <i data-lucide="play"></i> Start Auto Comment
+        </button>
+      </div>
+    </div>
+
+    <!-- SELL TAB -->
+    <div id="sell-tab" class="tab-content">
+      <div class="card glass-card">
+        <div class="card-header">
+          <h3><i data-lucide="shopping-cart"></i> Sell Token → Get SOL</h3>
+          <div class="status-badge" id="sellStatus">
+            <i data-lucide="circle" class="badge-icon"></i> Idle
+          </div>
+        </div>
+
+        <div class="sell-info-box">
+          <div class="info-row">
+            <span>Token Address</span>
+            <code id="tokenAddress">Not launched</code>
+          </div>
+          <div class="info-row">
+            <span>Current Price</span>
+            <span id="currentPrice">—</span>
+          </div>
+          <div class="info-row">
+            <span>Total Holdings</span>
+            <span id="totalHoldings">—</span>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Sell Amount</label>
+            <div class="input-with-suffix">
+              <input type="number" id="sellAmount" placeholder="0" min="0" step="0.01" />
+              <div class="suffix-group">
+                <button class="suffix-btn" data-percent="25">25%</button>
+                <button class="suffix-btn" data-percent="50">50%</button>
+                <button class="suffix-btn" data-percent="100">100%</button>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Min SOL to Receive</label>
+            <input type="number" id="minSol" step="0.001" placeholder="0.05" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Slippage Tolerance</label>
+          <div class="slider-container">
+            <input type="range" id="slippage" min="1" max="50" value="12" />
+            <div class="slider-labels">
+              <span>1%</span>
+              <span id="slippageValue">12%</span>
+              <span>50%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- WITHDRAWAL ADDRESS TOGGLE -->
+        <div class="checklist-group">
+          <label class="checklist-item" >
+            <input type="checkbox" id="useDefaultWithdraw" />
+            <span class="checkmark"></span>
+            <span class="label-text">Use default withdrawal address</span>
+          </label>
+
+          <div id="defaultAddressBox" style="display:none;">
+            <div class="input-with-prefix">
+              <input type="text" id="defaultAddress" value="" readonly />
+              <div class="prefix">Wallet</div>
+            </div>
+          </div>
+
+          <div id="customAddressBox">
+            <input type="text" id="customWithdrawAddress" placeholder="Enter withdrawal address..." />
+          </div>
+        </div>
+
+        <!-- CHECKLIST (AESTHETIC) -->
+        <div class="checklist-group">
+          <label class="checklist-item">
+            <input type="checkbox" id="sellOnPump" checked />
+            <span class="checkmark"></span>
+            <span class="label-text">Sell via Pump.fun</span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox" id="sellOnRaydium" />
+            <span class="checkmark"></span>
+            <span class="label-text">Sell via Raydium</span>
+          </label>
+        </div>
+
+        <button id="enableSellBtn" class="btn-launch full-width" disabled>
+          <i data-lucide="zap"></i> Enable Auto Sell
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- MODAL -->
+  <div id="verifyPopup" class="modal" style="display:none;">
+    <div class="modal-content verify-modal">
+      <div class="modal-header">
+        <h3><i data-lucide="shield-check"></i> Wallet Verification</h3>
+        <button class="close-modal" onclick="closeVerify()">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      <div id="verifyResult" class="verify-result">
+        <div class="loader"></div>
+        <p class="verify-text">Reading wallets...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toastContainer"></div>
+
+  <!-- STATUS BAR -->
+  <div class="status-bar">
+    <div class="price-box">
+      <img src="sol.svg" alt="SOL" class="sol-icon-tiny">
+      <span>SOL: $0.00</span>
+    </div>
+    <div class="conn-box">
+      <span class="status-dot"></span>
+      <span>Telegram Connected</span>
+    </div>
+  </div>
+
+  <!-- GLOBAL STATE -->
+  <script>
+    window.verifiedWallets = false;
+    window.wallets = [];
+    window.uploadedFile = null;
+    window.checkForm = () => {};
+  </script>
+
+  <!-- SCRIPTS -->
+  <script src="script1.js"></script>
+  <script src="wallet-upload.js"></script>
+  <script src="mint.js"></script>
+</body>
+</html>

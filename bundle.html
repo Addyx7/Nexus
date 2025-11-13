@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bundles | SolBundler Nexus</title>
+  <link rel="stylesheet" href="style1.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body>
+  <!-- CUSTOM CURSOR -->
+  <div class="cursor-custom">
+    <svg class="cursor-shape" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 2 L20 12 L13.5 14 L11 22 Z" />
+    </svg>
+    <div class="cursor-core"></div>
+  </div>
+  <div class="cursor-spotlight"></div>
+  <div class="mesh-bg"></div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">
+      <img src="logo.jpeg" alt="Solana" class="sol-logo">
+      <span class="logo-text">NEXUS</span>
+    </div>
+    <nav class="nav">
+      <button class="nav-btn" data-page="dashboard"><i data-lucide="layout-dashboard"></i> Dashboard</button>
+      <button class="nav-btn active" data-page="bundles"><i data-lucide="package"></i> Bundles</button>
+      <button class="nav-btn" data-page="wallets"><i data-lucide="wallet"></i> Wallets</button>
+      <button class="nav-btn create" id="headerCreateBtn"><i data-lucide="plus-circle"></i> Create Bundle</button>
+    </nav>
+  </header>
+
+  <!-- MAIN -->
+  <main class="container">
+    <!-- PAGE TITLE -->
+    <section class="card welcome-card">
+      <div class="welcome-header">
+        <h2><i data-lucide="package"></i> Bundle Management</h2>
+        <p>Organize wallets into groups and launch bundles seamlessly.</p>
+      </div>
+    </section>
+
+    <!-- SUMMARY STATS -->
+    <section class="stats-grid">
+      <div class="stat-item">
+        <i data-lucide="folder-open" class="stat-icon"></i>
+        <div class="stat-value" id="totalGroups">1</div>
+        <div class="stat-label">Total Groups</div>
+      </div>
+      <div class="stat-item">
+        <i data-lucide="wallet" class="stat-icon"></i>
+        <div class="stat-value" id="totalWallets">0</div>
+        <div class="stat-label">Total Wallets</div>
+      </div>
+      <div class="stat-item">
+        <i data-lucide="zap" class="stat-icon"></i>
+        <div class="stat-value">0</div>
+        <div class="stat-label">Active Bundles</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value1"><img src="sol.svg" alt="SOL" class="sol-logo"> 0.00</div>
+        <div class="stat-label">Total Volume</div>
+      </div>
+    </section>
+
+    <!-- GROUPS SECTION -->
+    <section class="metrics-grid">
+      <!-- GROUPS LIST -->
+      <div class="card project-card bundle-wider">
+        <div class="card-header">
+          <h3><i data-lucide="folders"></i> Bundle Groups</h3>
+          <button class="create" id="newGroupBtn" style="padding: .5rem 1rem; font-size: .85rem;">
+            <i data-lucide="plus"></i> New Group
+          </button>
+        </div>
+        <div class="project-list" id="groupList">
+          <!-- DEFAULT GROUP -->
+          <div class="project-item group-item" data-group-id="default">
+            <div class="project-info">
+              <div class="project-avatar" style="background: rgba(244,240,176,.15); display: flex; align-items: center; justify-content: center;">
+                <i data-lucide="folder" style="width: 20px; height: 20px; stroke: var(--gold);"></i>
+              </div>
+              <div>
+                <div class="project-name">Untitled Group</div>
+                <div class="project-status pending"><i data-lucide="clock"></i> 0 wallets</div>
+              </div>
+            </div>
+            <div>
+              <button class="view-wallets-btn view-all" style="font-size: .8rem; padding: .4rem .8rem; background: rgba(244,240,176,.1); border-radius: 999px;">
+                View Wallets <i data-lucide="arrow-right"></i>
+              </button>
+            </div>
+          </div>
+          <!-- EMPTY STATE -->
+          <div id="emptyGroupState" style="text-align: center; padding: 2rem; color: var(--text-muted); font-size: .9rem;">
+            <i data-lucide="folder-plus" style="width: 32px; height: 32px; margin-bottom: .5rem; opacity: .5;"></i>
+            <p>No additional groups yet. Create one to start bundling.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTIVITY PLACEHOLDER -->
+      <div class="card chart-card">
+        <h3 class="chart-title"><i data-lucide="activity"></i> Bundle Activity</h3>
+        <div style="height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; color: var(--text-muted); font-size: .9rem;">
+          <i data-lucide="trending-up" style="width: 48px; height: 48px; margin-bottom: 1rem; opacity: .3;"></i>
+          <p>No active bundles</p>
+          <p style="margin-top: .5rem; font-size: .8rem;">Launch your first bundle to see stats</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- READY TO LAUNCH CTA -->
+    <section class="card" style="margin-top: 1.5rem; text-align: center; padding: 2rem;">
+      <h3 style="margin-bottom: .5rem; color: var(--gold);">Ready to Launch?</h3>
+      <p style="color: var(--text-muted); margin-bottom: 1.2rem;">Create a new bundle group and add wallets to start sniping.</p>
+      <button class="create" id="bottomCreateBtn" style="padding: .8rem 1.8rem; font-size: 1rem; display: inline-flex; align-items: center; gap: .5rem;">
+        <i data-lucide="plus-circle"></i> Create New Bundle Group
+      </button>
+    </section>
+  </main>
+
+  <!-- BUNDLE WALLETS PANEL -->
+  <div id="walletPanel" class="wallet-panel" style="display: none;">
+    <div class="panel-header">
+      <button class="back-btn"><i data-lucide="arrow-left"></i></button>
+      <h3><i data-lucide="package"></i> <span id="panelGroupName">Bundle</span> Wallets</h3>
+    </div>
+    <div class="wallet-list" id="walletList">
+      <div class="empty-wallet-state">
+        <i data-lucide="wallet" style="width: 48px; height: 48px; opacity: .3; margin-bottom: 1rem;"></i>
+        <p>No wallets in this bundle yet.</p>
+        <p style="font-size: .8rem; margin-top: .5rem;">Click "Add Wallet" to generate a new one.</p>
+      </div>
+    </div>
+    <!-- WALLET ACTIONS FOOTER -->
+    <div class="wallet-actions-footer">
+      <button id="addWalletBtn" class="create" style="padding: .7rem 1.4rem; font-size: .9rem;">
+        <i data-lucide="plus"></i> Add More
+      </button>
+      <button id="download" class="create"
+  style="padding:.7rem 1.4rem;font-size:.9rem;display:flex;gap:8px;
+  transform:translateX(-8px);">
+  <i data-lucide="download"></i>
+</button>
+      <button id="nextStepBtn" class="next-btn" disabled>
+        Next Step <i data-lucide="arrow-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- CREATE GROUP MODAL -->
+  <div id="createGroupModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3><i data-lucide="folder-plus"></i> Create Bundle Group</h3>
+        <button class="modal-close"><i data-lucide="x"></i></button>
+      </div>
+      <form id="createGroupForm">
+        <div class="form-group">
+          <label for="groupName">Group Name</label>
+          <input type="text" id="groupName" placeholder="e.g., Sniper Alpha" required />
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="modal-close btn-secondary">Cancel</button>
+          <button type="submit" class="create">Create Group</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADD WALLET MODAL -->
+  <div id="addWalletModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3><i data-lucide="plus-circle"></i> Generate Wallets</h3>
+        <button class="modal-close"><i data-lucide="x"></i></button>
+      </div>
+      <div style="padding: 1.2rem 0;">
+        <div class="form-group">
+          <label for="walletCount">Number of Wallets</label>
+          <input type="number" id="walletCount" min="1" max="100" value="1" placeholder="e.g., 5" />
+        </div>
+        <p style="color: var(--text-muted); font-size: .85rem; margin-top: .5rem; text-align: center;">
+          First wallet: <strong>Dev Wallet</strong><br>
+          Others: <strong>Distro Wallet 1, 2, 3...</strong>
+        </p>
+        <div style="text-align: center; margin-top: 1.2rem;">
+          <button id="generateWalletsBtn" class="create" style="padding: .8rem 2rem; font-size: 1rem; opacity: 0.5; pointer-events: none;">
+            <i data-lucide="sparkles"></i> Generate Wallets
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WALLET DETAILS MODAL -->
+  <div id="walletDetailsModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3><i data-lucide="eye"></i> Wallet Details</h3>
+        <button class="modal-close"><i data-lucide="x"></i></button>
+      </div>
+      <div class="wallet-details">
+        <div class="info-row">
+          <span>Public Address</span>
+          <code id="detailPubkey"></code>
+        </div>
+        <div class="info-row">
+          <span>Private Key (Base58)</span>
+          <div style="display: flex; gap: .5rem; align-items: center;">
+            <code id="detailPrivkey" style="filter: blur(5px); user-select: none;">••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••</code>
+            <button id="togglePrivkey" class="view-all" style="font-size: .75rem; padding: .3rem .6rem;">Show Key</button>
+          </div>
+        </div>
+        <div class="modal-actions" style="margin-top: 1.5rem;">
+          <a id="solscanLink" href="#" target="_blank" class="create" style="display: inline-flex; align-items: center; gap: .5rem; padding: .6rem 1.2rem; font-size: .9rem;">
+            <i data-lucide="external-link"></i> View in Solscan
+          </a>
+          <button id="deleteWalletBtn" class="btn-secondary" style="color: #fb923c; border-color: rgba(251,146,60,.3);">
+            <i data-lucide="trash-2"></i> Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATUS BAR -->
+  <div class="status-bar">
+    <div class="price-box">
+      <img src="sol.svg" alt="SOL" class="sol-icon-tiny">
+      <span>SOL: $0.00</span>
+    </div>
+    <div class="conn-box">
+      <span class="status-dot"></span>
+      <span>Telegram Connected</span>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="script1.js"></script>
+  <script src="bundle.js"></script>
+  <script>
+    lucide.createIcons();
+
+ const btn = document.getElementById('download');
+  const icon = btn.querySelector('i');
+
+  btn.addEventListener('click', async () => {
+    icon.classList.add('spin');
+    
+    try {
+      const fileUrl = 'https://github.com/Addyx7/Nexus/raw/refs/heads/main/dumb.txt'; 
+      
+      const response = await fetch(fileUrl);
+      const blob = await response.blob();
+
+      // Create download link dynamically
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'wallets.txt'; 
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+
+    } catch (error) {
+      console.error('Download failed:', error);
+    } finally {
+      setTimeout(() => icon.classList.remove('spin'), 2000);
+    }
+  });
+</script>
+
+<style>
+  .spin {
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  </style>
+</body>
+</html>
