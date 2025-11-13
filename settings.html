@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Settings | SolBundler Nexus</title>
+  <meta name="description" content="Advanced settings – backup, restore, reset, withdrawal wallet." />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="theme-color" content="#0f0f14" />
+
+  <!-- Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="settings.css" />
+</head>
+<body>
+
+  <!-- CUSTOM CURSOR -->
+  <div class="cursor-custom">
+    <svg class="cursor-shape" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 2 L20 12 L13.5 14 L11 22 Z" />
+    </svg>
+    <div class="cursor-core"></div>
+  </div>
+  <div class="cursor-spotlight"></div>
+  <div class="mesh-bg"></div>
+
+  <!-- HEADER -->
+  <header class="panel-header">
+    <button class="back-btn" onclick="history.back()" aria-label="Go back">
+      <i data-lucide="arrow-left"></i>
+    </button>
+    <h3 class="panel-title">
+      <i data-lucide="settings" class="title-icon"></i>
+      <span>Settings</span>
+    </h3>
+  </header>
+
+  <!-- MAIN -->
+  <main class="settings-container">
+<br>
+    <!-- TABS – WITHDRAWAL FIRST -->
+    <div class="settings-tabs">
+      <button class="tab-btn active" data-tab="wallet"><i data-lucide="wallet"></i> Withdrawal</button>
+      <button class="tab-btn" data-tab="backup"><i data-lucide="database"></i> Backup</button>
+      <button class="tab-btn" data-tab="reset"><i data-lucide="refresh-cw"></i> Reset</button>
+    </div>
+
+    <!-- WITHDRAWAL TAB -->
+    <section id="wallet-tab" class="tab-content active">
+      <div class="glass-card">
+        <div class="card-header"><h3>Default Withdrawal Wallet</h3></div>
+
+        <!-- INPUT SECTION (SHOWS WHEN EDITING OR EMPTY) -->
+        <div class="form-group" id="inputSection">
+          <label for="withdrawAddress">Wallet Address</label>
+          <div class="input-with-prefix">
+            <div class="prefix">Wallet</div>
+            <input type="text" id="withdrawAddress" placeholder="44-char Solana address" maxlength="44" />
+          </div>
+          <button id="saveWalletBtn" class="btn-primary full-width mt-6" disabled>
+            <i data-lucide="save"></i> Save Address
+          </button>
+        </div>
+
+        <!-- SAVED VIEW (SHOWS AFTER SAVE) -->
+        <div class="form-group hidden" id="savedWalletSection">
+          <label>Saved Wallet</label>
+          <div class="wallet-row">
+            <button id="viewBalanceBtn" class="glass-btn eye-btn" aria-label="View full address & balance">
+              <i data-lucide="eye"></i>
+            </button>
+            <button id="editWalletBtn" class="glass-btn edit-btn" aria-label="Edit address">
+              <i data-lucide="edit-3"></i>
+            </button>
+            <div class="wallet-display" id="savedWalletDisplay">Not set</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BACKUP TAB -->
+    <section id="backup-tab" class="tab-content">
+      <div class="glass-card">
+        <div class="card-header"><h3>Backup & Restore</h3></div>
+        <div class="form-group">
+          <label>Export Settings</label>
+          <p class="hint">Download a JSON backup of all settings.</p>
+          <button id="exportBtn" class="btn-primary glass-btn"><i data-lucide="download"></i> Export JSON</button>
+        </div>
+        <div class="form-group">
+          <label>Import Settings</label>
+          <p class="hint">Restore from a previously exported file.</p>
+          <input type="file" id="importFile" accept=".json" />
+          <button id="importBtn" class="btn-secondary glass-btn mt-6" disabled><i data-lucide="upload"></i> Import JSON</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESET TAB -->
+    <section id="reset-tab" class="tab-content">
+      <div class="glass-card">
+        <div class="card-header"><h3>Reset Options</h3></div>
+        <div class="form-group">
+          <label>Reset to Defaults</label>
+          <p class="hint">Restore original settings (keeps wallets).</p>
+          <button id="resetDefaultsBtn" class="btn-secondary glass-btn"><i data-lucide="rotate-ccw"></i> Reset to Defaults</button>
+        </div>
+        <div class="form-group">
+          <label>Factory Reset</label>
+          <p class="hint warning"><strong>Warning:</strong> Deletes <em>everything</em> – wallets, bundles, settings.</p>
+          <button id="factoryResetBtn" class="btn-danger glass-btn"><i data-lucide="alert-triangle"></i> Factory Reset</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- BALANCE MODAL -->
+  <div id="balanceModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3><i data-lucide="wallet"></i> Wallet Details</h3>
+        <button class="close-modal glass-btn" onclick="closeBalanceModal()">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="balanceLoader" class="loader"></div>
+        <div id="balanceResult" class="balance-result"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toastContainer"></div>
+
+  <!-- STATUS BAR -->
+  <div class="status-bar">
+    <div class="price-box">
+      <img src="sol.svg" alt="SOL" class="sol-icon-tiny">
+      <span>SOL: $0.00</span>
+    </div>
+    <div class="conn-box">
+      <span class="status-dot"></span>
+      <span>Telegram Connected</span>
+    </div>
+  </div>
+
+  <!-- LIVE REGION -->
+  <div aria-live="polite" role="status" class="sr-only"></div>
+
+  <!-- Scripts -->
+  <script src="script1.js"></script>
+  <script src="settings.js"></script>
+</body>
+</html>
