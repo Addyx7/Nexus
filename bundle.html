@@ -26,10 +26,18 @@
       <span class="logo-text">NEXUS</span>
     </div>
     <nav class="nav">
-      <button class="nav-btn" data-page="dashboard"><i data-lucide="layout-dashboard"></i> Dashboard</button>
-      <button class="nav-btn active" data-page="bundles"><i data-lucide="package"></i> Bundles</button>
-      <button class="nav-btn" data-page="wallets"><i data-lucide="wallet"></i> Wallets</button>
-      <button class="nav-btn create" id="headerCreateBtn"><i data-lucide="plus-circle"></i> Create Bundle</button>
+      <button class="nav-btn" data-page="dashboard" onclick="window.location.href='dashboard.html'">
+        <i data-lucide="layout-dashboard"></i> Dashboard
+      </button>
+      <button class="nav-btn active" data-page="bundles">
+        <i data-lucide="package"></i> Bundles
+      </button>
+      <button class="nav-btn" data-page="wallets" onclick="window.location.href='settings.html'">
+        <i data-lucide="wallet"></i> Settings
+      </button>
+     <button class="nav-btn create" onclick="window.location.href='bundle.html'">
+  <i data-lucide="plus-circle"></i> Create Bundle
+</button>
     </nav>
   </header>
 
@@ -284,4 +292,5 @@
   }
   </style>
 </body>
+
 </html>
