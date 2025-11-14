@@ -32,13 +32,13 @@
         <i data-lucide="layout-dashboard"></i> Dashboard
       </button>
       <button class="nav-btn" data-page="bundles" onclick="window.location.href='bundle.html'">
-        <i data-lucide="package"></i> Bundles
+        <i data-lucide="package"></i> Project
       </button>
       <button class="nav-btn" data-page="wallets" onclick="window.location.href='settings.html'">
         <i data-lucide="wallet"></i> Settings
       </button>
      <button class="nav-btn create" onclick="window.location.href='bundle.html'">
-  <i data-lucide="plus-circle"></i> Create Bundle
+  <i data-lucide="plus-circle"></i> Create Project
 </button>
     </nav>
   </header>
@@ -50,13 +50,13 @@
     <section class="card welcome-card">
       <div class="welcome-header">
         <h2>Welcome Back!</h2>
-        <p>Sunday, November 9, 2025</p>
+        <p id="currentDate"></p>
       </div>
       <div class="stats-grid">
         <div class="stat-item">
           <i data-lucide="rocket" class="stat-icon"></i>
           <div class="stat-value">5</div>
-          <div class="stat-label">Bundles Launched</div>
+          <div class="stat-label">Projects Launched</div>
         </div>
         <div class="stat-item">
           <i data-lucide="wallet" class="stat-icon"></i>
@@ -81,7 +81,7 @@
       <!-- Recent Bundles -->
       <div class="card project-card">
         <div class="card-header">
-          <h3><i data-lucide="history"></i> Recent Bundles</h3>
+          <h3><i data-lucide="history"></i> Recent Projects</h3>
           <a href="bundle.html" class="view-all">View All <i data-lucide="arrow-right"></i></a>
         </div>
         <div class="project-list">
@@ -141,10 +141,15 @@
   <script src="script1.js"></script>
   <script>
     lucide.createIcons();
+
+     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  document.getElementById('currentDate').textContent =
+    new Date().toLocaleDateString('en-US', options);
   </script>
 </body>
 
 </html>
+
 
 
 
