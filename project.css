@@ -173,7 +173,7 @@ small,.info{font-size:.85rem;color:var(--text-muted);}
 .field.full{grid-column:1/-1;}
 .field label{font-size:.86rem;color:var(--text-muted);font-weight:500;}
 .field input,.field textarea{
-  background:rgba(15,15,20,.6);border:1px solid var(--border);
+  background:#080808;border:1px solid var(--border);
   color:var(--text);padding:.85rem 1rem;
   border-radius:var(--radius-sm);font-family:inherit;
   transition:all .3s var(--ease);
@@ -370,7 +370,7 @@ small,.info{font-size:.85rem;color:var(--text-muted);}
 /* === IMAGE UPLOAD AREA === */
 .upload-area{
   margin-bottom:2.2rem;border:2px dashed rgba(244,240,176,.25);
-  border-radius:var(--radius);background:rgba(15,15,20,.45);
+  border-radius:var(--radius);background:#1B1B1B;
   overflow:hidden;position:relative;
   transition:all .35s var(--ease);
 }
@@ -420,7 +420,7 @@ small,.info{font-size:.85rem;color:var(--text-muted);}
 
 /* === TOAST === */
 .toast{
-  position:fixed;bottom:1.5rem;right:1.5rem;
+  position:fixed;top:1.5rem;right:1.5rem;
   display:flex;align-items:center;gap:.8rem;
   background:rgba(25,32,31,.95);color:var(--text);
   padding:1rem 1.5rem;border-radius:999px;
