@@ -97,15 +97,11 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => walletCountInput?.focus(), 100);
     }
 
-    // VIEW WALLETS
-    if (t('.view-wallets-btn')) {
-      const groupItem = t('.group-item');
-      currentGroupId = groupItem.dataset.groupId;
-      document.getElementById('panelGroupName').textContent = groupItem.querySelector('.project-name').textContent;
-      walletPanel.style.display = 'flex';
-      mainStatusBar.style.display = 'none'; // HIDE STATUS BAR
-      loadWallets(currentGroupId);
-    }
+// VIEW WALLETS → redirect to mint.html
+if (t('.view-wallets-btn')) {
+  window.location.href = 'mint.html';
+}
+
 
     // GENERATE WALLETS
     if (t('#generateWalletsBtn') && !generateBtn.disabled) {
@@ -397,4 +393,5 @@ document.addEventListener('DOMContentLoaded', () => {
   nextBtn.addEventListener('click', () => {
     // Redirect to mint.html
     window.location.href = 'mint.html';
+
   });
