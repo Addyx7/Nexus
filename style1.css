@@ -37,6 +37,8 @@ body {
   cursor: none;
 }
 
+body, * { cursor: default !important; }
+
 /* === ICONS === */
 i[data-lucide] {
   width: 18px;
@@ -67,39 +69,7 @@ i[data-lucide] {
 
 /* === CUSTOM CURSOR (EXACT SHAPE YOU SENT) === */
 
-.cursor-custom {
-  position: fixed;
-  top: 0; left: 0;
-  width: 90px;
-  height: 20px;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
-.cursor-shape {
-  width: 36px;
-  height: 36px;
-  animation: cursorPulse 2s ease-in-out infinite;
-  filter: drop-shadow(0 0 12px rgba(244,240,176,0.7));
-}
-
-.cursor-core {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  background: #fff;
-  border-radius: 50%;
-  box-shadow: 0 0 10px #fff;
-}
-
-@keyframes cursorPulse {
-  0%, 100% { transform: scale(1) rotate(0deg); }
-  50% { transform: scale(1.08) rotate(8deg); }
-}
 
 /* Optional spotlight + mesh */
 .cursor-spotlight {
@@ -1202,4 +1172,9 @@ i[data-lucide] {
 
 @keyframes toastOut {
   to { opacity: 0; transform: translateX(100%) scale(0.9); }
+}
+
+/* ADD THIS TO style1.css */
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
 }
