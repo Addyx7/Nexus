@@ -1,5 +1,4 @@
 // === CUSTOM CURSOR + SPOTLIGHT + MESH BG ===
-const cursor = document.querySelector('.cursor-custom');
 const shape = document.querySelector('.cursor-shape');
 const core = document.querySelector('.cursor-core');
 const spotlight = document.querySelector('.cursor-spotlight');
@@ -14,8 +13,6 @@ function animate() {
   cursorX += dx * speed;
   cursorY += dy * speed;
 
-  cursor.style.left = `${cursorX}px`;
-  cursor.style.top = `${cursorY}px`;
 
   spotlight.style.left = `${mouseX}px`;
   spotlight.style.top = `${mouseY}px`;
