@@ -120,19 +120,39 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => showToast('Metadata deployed successfully!', 'success'), 2000);
   });
 
-  document.getElementById('cloneBtn').addEventListener('click', () => {
-    const data = {
-      name: document.querySelector('#metadata input[placeholder="jj"]').value,
-      symbol: document.querySelector('#metadata input[placeholder="hh"]').value,
-      description: document.querySelector('#metadata textarea').value,
-      twitter: document.querySelectorAll('#metadata input')[3].value,
-      telegram: document.querySelectorAll('#metadata input')[4].value,
-      website: document.querySelectorAll('#metadata input')[5].value,
-      image: previewImg.src || 'none'
-    };
-    navigator.clipboard.writeText(JSON.stringify(data, null, 2));
-    showToast('Metadata JSON copied to clipboard', 'success');
-  });
+
+/* ===== CLONE METADATA POPUP ===== */
+
+const clonePopup = document.getElementById('clonePopup');
+const closeClonePopup = document.getElementById('closeClonePopup');
+const cloneNowBtn = document.getElementById('cloneNowBtn');
+const cloneCAInput = document.getElementById('cloneCA');
+
+document.getElementById('cloneBtn').addEventListener('click', () => {
+  clonePopup.style.display = 'flex';
+  lucide.createIcons();
+});
+
+// close popup
+closeClonePopup.addEventListener('click', () => {
+  clonePopup.style.display = 'none';
+});
+
+// clone now
+cloneNowBtn.addEventListener('click', () => {
+  const ca = cloneCAInput.value.trim();
+
+  if (!ca) {
+    showToast("Enter a valid Token CA", "error");
+    return;
+  }
+
+  showToast(`Cloning metadata for: ${ca}`, "success");
+
+  clonePopup.style.display = 'none';
+});
+
+
 
   /* ==== WALLET GENERATION ==== */
   const walletList = document.getElementById('walletList');
