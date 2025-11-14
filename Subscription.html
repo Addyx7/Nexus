@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Subscription – SolBundler Nexus</title>
+
+  <link rel="stylesheet" href="style1.css" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <style>
+    /* ────── ENHANCED STATUS HEADER (unchanged) ────── */
+    .status-header {
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--glass); border: 1.5px solid var(--border);
+      border-radius: var(--radius); padding: 1.6rem 2rem;
+      margin: 2rem auto; max-width: 1100px; backdrop-filter: var(--blur);
+      box-shadow: var(--shadow); transition: all .4s var(--ease);
+      position: relative; overflow: hidden;
+    }
+    .status-header::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(244,240,176,.05), transparent 70%);
+      opacity: 0; transition: opacity .4s;
+    }
+    .status-header:hover::before { opacity: 1; }
+    .status-header:hover { transform: translateY(-8px); border-color: var(--gold); box-shadow: 0 20px 50px rgba(244,240,176,.22); }
+    #paySolBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: .9rem 2rem;
+  background: linear-gradient(135deg, rgba(244,240,176,0.15), rgba(244,240,176,0.05));
+  border: 1.5px solid rgba(244,240,176,.4);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: .3s;
+  color: var(--gold);
+  box-shadow: 0 6px 15px rgba(244,240,176,.15);
+}
+
+#paySolBtn:hover {
+  transform: translateY(-3px);
+  border-color: var(--gold);
+  background: rgba(244,240,176,.25);
+  box-shadow: 0 12px 30px rgba(244,240,176,.3);
+}
+
+
+
+    .status-left { display: flex; align-items: center; gap: 1.2rem; }
+    .user-avatar {
+      width: 54px; height: 54px; border-radius: 50%;
+      background: linear-gradient(135deg, #f4f0b0, #d4af37);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; color: #000; font-size: 1.1rem;
+      box-shadow: 0 6px 20px rgba(244,240,176,.3);
+    }
+    .status-info h3 { font-size: 1.35rem; color: var(--gold); margin: 0; display: flex; align-items: center; gap: .5rem; }
+    .status-info .plan-badge {
+      background: rgba(74,222,128,.15); color: var(--profit);
+      border: 1px solid rgba(74,222,128,.3); padding: .35rem .8rem;
+      border-radius: 999px; font-size: .78rem; font-weight: 600;
+      display: inline-flex; align-items: center; gap: .4rem; margin-left: .6rem;
+    }
+    .status-meta { display: flex; gap: 1.2rem; margin-top: .4rem; font-size: .88rem; color: var(--text-muted); }
+    .meta-item { display: flex; align-items: center; gap: .4rem; }
+    .meta-item strong { color: var(--gold); }
+
+    /* SOL modal specific tweaks */
+#solModal .modal { max-width:640px; }
+#solAddressBox { min-height:68px; display:flex; align-items:center; justify-content:center; position:relative; padding: .8rem 1rem; }
+#solAddressBox img { filter: drop-shadow(0 6px 12px rgba(244,240,176,.12)); }
+.copy-btn { position:absolute; right:.8rem; top:50%; transform:translateY(-50%); }
+#modalPlanSOL { font-variant-numeric: tabular-nums; }
+#paymentStatus.confirmed { color: #4ade80; font-weight:800; }
+#paymentStatus.pending { color: var(--gold); font-weight:700; }
+#txInfo a { color: var(--gold); text-decoration: underline; }
+
+
+    .status-right { display: flex; align-items: center; gap: 1.5rem; }
+    .commission-chip {
+      background: linear-gradient(135deg, rgba(251,146,60,.15), rgba(251,146,60,.05));
+      color: #fb923c; border: 1px solid rgba(251,146,60,.3);
+      padding: .5rem 1rem; border-radius: 999px;
+      font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: .9rem;
+      display: flex; align-items: center; gap: .5rem;
+      box-shadow: 0 4px 12px rgba(251,146,60,.15);
+    }
+    .upgrade-hint { color: var(--text-muted); font-size: .85rem; display: flex; align-items: center; gap: .4rem; transition: color .3s; }
+    .status-header:hover .upgrade-hint { color: var(--gold); }
+
+    /* ────── UPGRADED PLANS CONTAINER ────── */
+    .subscription-page { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+
+    .plans-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+      padding: 0 1rem;
+    }
+
+    .plan-card {
+      background: var(--glass);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.2rem 1.8rem;
+      position: relative;
+      overflow: hidden;
+      transition: all .45s var(--ease);
+      cursor: pointer;
+      user-select: none;
+      transform: perspective(1000px) rotateX(0deg);
+      box-shadow: var(--shadow);
+    }
+    .plan-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(244,240,176,.15), transparent 60%);
+      opacity: 0;
+      transition: opacity .4s;
+      pointer-events: none;
+    }
+    .plan-card:hover::before { opacity: 1; }
+    .plan-card:hover {
+      transform: perspective(1000px) rotateX(4deg) translateY(-16px) scale(1.04);
+      border-color: var(--gold);
+      box-shadow: 0 28px 60px rgba(244,240,176,.28);
+      z-index: 10;
+    }
+
+    .plan-card.free {
+      opacity: .55;
+      cursor: default;
+      transform: none;
+    }
+    .plan-card.free:hover {
+      transform: none;
+      box-shadow: var(--shadow);
+    }
+
+    /* Ribbons */
+    .ribbon {
+      position: absolute;
+      top: 1.2rem; right: -2.8rem;
+      width: 10rem;
+      background: linear-gradient(135deg, #4ade80, #22c55e);
+      color: #fff;
+      font-size: .78rem;
+      font-weight: 700;
+      text-align: center;
+      padding: .4rem 0;
+      transform: rotate(45deg);
+      box-shadow: 0 4px 12px rgba(74,222,128,.3);
+      z-index: 5;
+    }
+    .ribbon.current {
+      background: linear-gradient(135deg, #fb923c, #f97316);
+    }
+
+    .plan-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: .6rem;
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      color: var(--gold);
+    }
+    .plan-subtitle {
+      font-size: .95rem;
+      color: var(--text-muted);
+      margin-bottom: 1.2rem;
+    }
+
+    .plan-price {
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: var(--gold);
+      margin: 1rem 0;
+      display: flex;
+      align-items: baseline;
+      gap: .4rem;
+    }
+    .plan-price small {
+      font-size: 1rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .save-badge {
+      background: rgba(74,222,128,.15);
+      color: var(--profit);
+      font-size: .82rem;
+      font-weight: 700;
+      padding: .3rem .7rem;
+      border-radius: 999px;
+      margin-left: .8rem;
+      border: 1px solid rgba(74,222,128,.3);
+    }
+
+    .plan-features {
+      list-style: none;
+      margin: 1.6rem 0;
+      padding-left: .2rem;
+    }
+    .plan-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: .7rem;
+      margin-bottom: .9rem;
+      font-size: .96rem;
+      line-height: 1.5;
+    }
+    .plan-features i {
+      stroke: var(--profit);
+      width: 20px;
+      height: 20px;
+      margin-top: .1rem;
+      flex-shrink: 0;
+    }
+    .plan-features .dim { color: var(--text-muted); opacity: .7; }
+
+    /* Selected state */
+    .plan-card.selected {
+      border-color: var(--gold);
+      background: rgba(244,240,176,.08);
+      box-shadow: 0 0 40px rgba(244,240,176,.3);
+      transform: translateY(-8px) scale(1.02);
+    }
+
+    /* ────── ENHANCED UPGRADE FOOTER ────── */
+    .upgrade-footer {
+      text-align: center;
+      padding: 2.8rem 2.5rem;
+      background: var(--glass);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      backdrop-filter: var(--blur);
+      box-shadow: var(--shadow);
+      max-width: 900px;
+      margin: 2.5rem auto;
+      position: relative;
+      overflow: hidden;
+    }
+    .upgrade-footer::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--gold), var(--profit), var(--gold));
+      background-size: 200% 100%;
+      animation: shimmer 3s linear infinite;
+    }
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .upgrade-footer .selected-plan {
+      font-weight: 700;
+      color: var(--gold);
+      font-size: 1.35rem;
+      margin-bottom: .8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .6rem;
+    }
+    .upgrade-footer .selected-info {
+      color: var(--text-muted);
+      font-size: .95rem;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+    }
+
+    .payment-grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 1.2rem;
+      align-items: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .payment-label {
+      font-weight: 600;
+      color: var(--gold);
+      font-size: .95rem;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .payment-row {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .payment-toggle {
+      background: rgba(244,240,176,.1);
+      border: 1.5px solid rgba(244,240,176,.3);
+      color: var(--gold);
+      padding: .8rem 1.6rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: .95rem;
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      transition: all .3s var(--ease);
+      min-width: 140px;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .payment-toggle::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #4ade80, #22c55e);
+      opacity: 0;
+      transition: opacity .3s;
+    }
+    .payment-toggle.active {
+      border-color: var(--gold);
+      box-shadow: 0 8px 24px rgba(244,240,176,.25);
+      transform: translateY(-2px);
+    }
+    .payment-toggle.active::before { opacity: 1; }
+    .payment-toggle.active i { stroke: #fff; }
+    .payment-toggle:hover:not(.active) {
+      background: rgba(244,240,176,.2);
+      border-color: var(--gold);
+      transform: translateY(-1px);
+    }
+    .payment-row .primary {
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #000;
+      border: none;
+      font-weight: 700;
+      min-width: 200px;
+      padding: .9rem 2rem;
+      font-size: 1.05rem;
+      box-shadow: 0 10px 30px rgba(244,240,176,.3);
+    }
+    .payment-row .primary:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 16px 40px rgba(244,240,176,.45);
+    }
+
+   
+    /* Mouse glow effect */
+    .plan-card {
+      --mouse-x: 50%;
+      --mouse-y: 50%;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .payment-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .upgrade-footer { padding: 2rem 1.5rem; }
+      .modal { padding: 2rem 1.5rem; margin: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor-spotlight"></div>
+  <div class="mesh-bg"></div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">
+      <img src="logo.jpeg" alt="Solana" class="sol-logo">
+      <span class="logo-text">NEXUS</span>
+    </div>
+    <nav class="nav">
+      <button class="nav-btn" onclick="location.href='dashboard.html'"><i data-lucide="layout-dashboard"></i> Dashboard</button>
+      <button class="nav-btn" onclick="location.href='referrals.html'"><i data-lucide="users"></i> Referral</button>
+      <button class="nav-btn active"><i data-lucide="badge-check"></i> Subscription</button>
+      <button class="nav-btn" onclick="location.href='settings.html'"><i data-lucide="settings"></i> Settings</button>
+      <button class="nav-btn create" onclick="location.href='bundle.html'"><i data-lucide="plus-circle"></i> Create Project</button>
+    </nav>
+  </header>
+
+   <!-- MAIN -->
+  <main class="subscription-page">
+<br>
+    <!-- STATUS HEADER -->
+    <section class="status-header">
+      <div class="status-left">
+        <div class="user-avatar">U</div>
+        <div class="status-info">
+          <h3><i data-lucide="shield-check"></i> Free Plan <span class="plan-badge"><i data-lucide="star"></i> Active</span></h3>
+          <div class="status-meta">
+            <div class="meta-item"><i data-lucide="user"></i> Role: <strong>Default</strong></div>
+            <div class="meta-item"><i data-lucide="clock"></i> Since: <strong>Nov 2025</strong></div>
+          </div>
+        </div>
+      </div>
+      <div class="status-right">
+        <div class="commission-chip"><i data-lucide="percent"></i> 0.70% Commission</div>
+        <div class="upgrade-hint"><i data-lucide="zap"></i> Upgrade for 0%</div>
+      </div>
+    </section>
+
+    <!-- TITLE -->
+    <h2 style="text-align:center; color:var(--gold); font-size:2.2rem; margin:2.5rem 0 1.2rem; display: flex; align-items: center; justify-content: center; gap: .6rem;">
+      <i data-lucide="zap"></i> Choose Your Power Plan
+    </h2>
+    <p style="text-align:center; color:var(--text-muted); max-width:700px; margin:0 auto 3.5rem; font-size: 1.05rem;">
+      <i data-lucide="unlock"></i> Unlock zero-fee trading, priority support, and full platform access with premium plans.
+    </p>
+
+    <!-- PLANS CONTAINER -->
+    <div class="plans-container">
+
+      <!-- FREE -->
+      <div class="plan-card free">
+        <div class="ribbon current">CURRENT</div>
+        <div class="plan-title"><i data-lucide="lock"></i> Free</div>
+        <div class="plan-subtitle">Perfect for testing the platform</div>
+        <div class="plan-price">FREE</div>
+        <ul class="plan-features">
+          <li><i data-lucide="check"></i> Standard 0.80% commission</li>
+          <li><i data-lucide="check"></i> Access to core features</li>
+          <li><i data-lucide="x" class="dim"></i> Priority support</li>
+          <li><i data-lucide="x" class="dim"></i> Advanced analytics</li>
+        </ul>
+      </div>
+
+      <!-- MONTHLY -->
+      <div class="plan-card" data-plan="monthly" tabindex="0" role="button">
+        <div class="plan-title"><i data-lucide="zap"></i> Monthly</div>
+        <div class="plan-subtitle">Best for active traders</div>
+        <div class="plan-price">$800 <small>/ month</small></div>
+        <ul class="plan-features">
+          <li><i data-lucide="check-circle"></i> <strong>0% trading commission</strong></li>
+          <li><i data-lucide="check-circle"></i> Full access to all features</li>
+          <li><i data-lucide="check-circle"></i> Priority email & chat support</li>
+          <li><i data-lucide="check-circle"></i> Early access to new tools</li>
+        </ul>
+      </div>
+
+      <!-- YEARLY -->
+      <div class="plan-card" data-plan="yearly" tabindex="0" role="button">
+        <div class="ribbon">POPULAR</div>
+        <div class="plan-title"><i data-lucide="crown"></i> Yearly</div>
+        <div class="plan-subtitle">Save big with annual billing</div>
+        <div class="plan-price">
+          $4800 <small>/ year</small>
+          <span class="save-badge"><i data-lucide="gift"></i>50%</span>
+        </div>
+        <ul class="plan-features">
+          <li><i data-lucide="check-circle"></i> <strong>0% trading commission</strong></li>
+          <li><i data-lucide="check-circle"></i> Everything in Monthly</li>
+          <li><i data-lucide="check-circle"></i> <strong>Top-tier priority support</strong></li>
+          <li><i data-lucide="check-circle"></i> VIP Telegram channel access</li>
+          <li><i data-lucide="check-circle"></i> Free future upgrades</li>
+        </ul>
+      </div>
+
+    </div>
+
+    
+
+<!-- SOL PAYMENT ROW -->
+ <section class="upgrade-footer">
+      <div class="selected-plan">
+        <i data-lucide="check-circle"></i>
+        You have selected the <span id="selectedName">—</span> plan
+      </div>
+      <div class="selected-info">
+        <i data-lucide="credit-card"></i>
+        Select your preferred payment method below
+      </div>
+      <div class="payment-row">
+        <button class="payment-toggle" id="paySolBtn">
+          <img src="sol.svg" style="width:20px;height:20px;" alt="SOL"> Pay with SOL
+        </button>
+      </div>
+    </section>
+
+
+      
+
+    </section>
+
+  </main>
+
+
+  <!-- STATUS BAR -->
+  <div class="status-bar">
+    <div class="price-box">
+      <img src="sol.svg" alt="SOL" class="sol-icon-tiny">
+      <span>SOL: $0.00</span>
+    </div>
+    <div class="conn-box">
+      <span class="status-dot"></span>
+      <span>Telegram Connected</span>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script>
+    lucide.createIcons();
+
+    // Mouse glow effect
+    document.querySelectorAll('.plan-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100 + '%';
+        const y = ((e.clientY - rect.top) / rect.height) * 100 + '%';
+        card.style.setProperty('--mouse-x', x);
+        card.style.setProperty('--mouse-y', y);
+      });
+    });
+
+    // Plan selection
+    const selectable = document.querySelectorAll('.plan-card[data-plan]');
+    const nameEl = document.getElementById('selectedName');
+
+    selectable.forEach(card => {
+      const select = () => {
+        document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        nameEl.innerText = card.querySelector('.plan-title').innerText.trim();
+      };
+      card.addEventListener('click', select);
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(); }
+      });
+    });
+
+
+    (() => {
+  // CONFIG
+  const SOL_ADDRESS = 'CGuPySjT9CPoa9cNHMg6d2TmkPj22mn132HxwJ43HShh'; // your recipient
+  const COINGECKO_URL = 'https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd';
+  const SOL_RPC = 'https://api.mainnet-beta.solana.com';
+  const LAMPORTS_PER_SOL = 1000000000;
+
+  // UI refs
+  const payBtn = document.getElementById('paySolBtn');
+  const solModal = document.getElementById('solModal');
+  const closeModal = document.getElementById('closeSolModal');
+  const solAddressEl = document.getElementById('solAddress');
+  const copyBtn = document.getElementById('copySol');
+  const modalPlanName = document.getElementById('modalPlanName');
+  const modalPlanUSD = document.getElementById('modalPlanUSD');
+  const modalPlanSOL = document.getElementById('modalPlanSOL');
+  const paymentStatus = document.getElementById('paymentStatus');
+  const txInfo = document.getElementById('txInfo');
+  const refreshPriceBtn = document.getElementById('refreshPriceBtn');
+
+  // Place the address
+  solAddressEl.innerText = SOL_ADDRESS;
+
+  // open modal
+  payBtn.addEventListener('click', () => {
+    // determine selected plan and price from page
+    const sel = document.querySelector('.plan-card.selected');
+    let planName = '—';
+    let planUSD = 0;
+    if (sel) {
+      planName = sel.querySelector('.plan-title').innerText.trim();
+      // try to parse price inside .plan-price
+      const priceNode = sel.querySelector('.plan-price');
+      if (priceNode) {
+        const txt = priceNode.innerText.replace(/,/g,'').trim();
+        // extract number
+        const m = txt.match(/([\d,.]+)/);
+        if (m) planUSD = parseFloat(m[1]);
+      }
+    }
+    modalPlanName.innerText = planName;
+    modalPlanUSD.innerText = planUSD ? ('$' + planUSD) : '—';
+
+    // expected SOL computed and updated by price poll
+    paymentStatus.innerText = 'Waiting for payment...';
+    paymentStatus.className = 'pending';
+    txInfo.innerHTML = '';
+
+    solModal.classList.add('show');
+    solModal.setAttribute('aria-hidden','false');
+
+    // start checking right away
+    lastPrice = null;
+    expectedSol = null;
+    checkPriceNow();
+    startPricePolling();
+    startTxPolling(planUSD);
+  });
+
+  // close modal
+  closeModal.addEventListener('click', closeAll);
+  solModal.addEventListener('click', (e) => { if (e.target === solModal) closeAll(); });
+  function closeAll(){
+    solModal.classList.remove('show');
+    solModal.setAttribute('aria-hidden','true');
+    stopPricePolling();
+    stopTxPolling();
+  }
+
+  // copy address
+  copyBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(SOL_ADDRESS);
+      copyBtn.classList.add('copied');
+      copyBtn.innerText = 'Copied';
+      setTimeout(()=>{ copyBtn.classList.remove('copied'); copyBtn.innerText = 'Copy'; }, 1500);
+    } catch (err) {
+      alert('Copy failed — please copy manually.');
+    }
+  });
+
+  refreshPriceBtn.addEventListener('click', checkPriceNow);
+
+  // PRICE POLLING
+  let priceInterval = null;
+  let lastPrice = null;
+  let expectedSol = null;
+
+  async function fetchSolPrice(){
+    try {
+      const res = await fetch(COINGECKO_URL, {cache: 'no-store'});
+      if(!res.ok) throw new Error('price fetch failed');
+      const data = await res.json();
+      return data?.solana?.usd || null;
+    } catch (e) {
+      console.warn('Price fetch error', e);
+      return null;
+    }
+  }
+
+  async function checkPriceNow(){
+    const price = await fetchSolPrice();
+    if (!price) {
+      document.getElementById('priceLiveNote').innerText = 'Price unavailable — retrying...';
+      return;
+    }
+    lastPrice = price;
+    document.getElementById('priceLiveNote').innerText = `1 SOL = $${price.toFixed(4)} (live)`;
+    // compute expected SOL for the plan if we know USD
+    const planUSDtext = modalPlanUSD.innerText || '';
+    const planUSD = planUSDtext.startsWith('$') ? parseFloat(planUSDtext.replace('$','')) : null;
+    if (planUSD && price > 0) {
+      expectedSol = Number((planUSD / price).toFixed(4)); // 4 decimal places
+      modalPlanSOL.innerText = expectedSol + ' SOL';
+    } else {
+      modalPlanSOL.innerText = '—';
+    }
+  }
+
+  function startPricePolling(){
+    stopPricePolling();
+    priceInterval = setInterval(checkPriceNow, 1000); // every 1 sec
+    // also run immediately
+    checkPriceNow();
+  }
+  function stopPricePolling(){
+    if (priceInterval) { clearInterval(priceInterval); priceInterval = null; }
+  }
+
+  /* TX POLLING: look for incoming txs to SOL_ADDRESS and check lamports delta.
+     Uses Solana JSON-RPC getSignaturesForAddress and getTransaction.
+     We keep a short recent-signature cache to avoid reprocessing.
+  */
+  let txInterval = null;
+  let seenSigs = new Set();
+
+  function startTxPolling(planUSD){
+    stopTxPolling();
+    // compute expected lamports at time of start (use current price if available)
+    const expectedLamports = expectedSol ? Math.round(expectedSol * LAMPORTS_PER_SOL) : null;
+    txInterval = setInterval(()=> pollForTx(expectedLamports), 3000); // every 3s
+    // run immediately
+    pollForTx(expectedLamports);
+  }
+  function stopTxPolling(){ if (txInterval) { clearInterval(txInterval); txInterval = null; } }
+
+  async function rpcRequest(method, params){
+    try {
+      const res = await fetch(SOL_RPC, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ jsonrpc:'2.0', id:1, method, params })
+      });
+      if (!res.ok) throw new Error('rpc error ' + res.status);
+      return await res.json();
+    } catch (e) {
+      console.warn('RPC error', e);
+      return null;
+    }
+  }
+
+  async function pollForTx(expectedLamports){
+    // fetch recent signatures
+    try {
+      const body = await rpcRequest('getSignaturesForAddress', [SOL_ADDRESS, { limit: 8 }]);
+      if (!body || !body.result) return;
+      const sigs = body.result.map(s => s.signature);
+      for (const sig of sigs) {
+        if (seenSigs.has(sig)) continue;
+        // fetch transaction details
+        const txRes = await rpcRequest('getTransaction', [sig, { encoding: 'jsonParsed' }]);
+        if (!txRes || !txRes.result) { seenSigs.add(sig); continue; }
+
+        const tx = txRes.result;
+        const meta = tx.meta;
+        if (!meta) { seenSigs.add(sig); continue; }
+
+        // find account index
+        const accountKeys = tx.transaction.message.accountKeys.map(a => a.pubkey || a);
+        const idx = accountKeys.findIndex(a => a === SOL_ADDRESS);
+        if (idx === -1) { seenSigs.add(sig); continue; }
+
+        const pre = meta.preBalances ? meta.preBalances[idx] : null;
+        const post = meta.postBalances ? meta.postBalances[idx] : null;
+        if (pre == null || post == null) { seenSigs.add(sig); continue; }
+
+        const delta = post - pre; // positive if received lamports
+        if (delta > 0) {
+          // show tx info
+          const solAmount = delta / LAMPORTS_PER_SOL;
+          txInfo.innerHTML = `Detected tx <strong>${sig}</strong> — received ${solAmount.toFixed(6)} SOL`;
+          // check if it meets expected amount (allow tiny slippage tolerance)
+          if (expectedLamports && delta + 1 >= expectedLamports) {
+            paymentStatus.innerText = 'Payment Confirmed';
+            paymentStatus.className = 'confirmed';
+            // show confirmation link (Solscan)
+            const explorer = `https://solscan.io/tx/${sig}`;
+            txInfo.innerHTML += `<div style="margin-top:.4rem"><a href="${explorer}" target="_blank" rel="noopener">View on Solscan</a></div>`;
+            // stop polling
+            stopPricePolling();
+            stopTxPolling();
+            // OPTIONAL: you can trigger any post-payment success action here (call backend, unlock features, etc.)
+          } else {
+            // small payment or partial — indicate partial
+            paymentStatus.innerText = 'Payment received (amount mismatch)';
+            paymentStatus.className = 'pending';
+          }
+          // mark this sig seen
+          seenSigs.add(sig);
+          // do not immediately return — continue checking other sigs
+        } else {
+          seenSigs.add(sig);
+        }
+      }
+    } catch (e) {
+      console.warn('pollForTx error', e);
+    }
+  }
+
+  // Make sure plan selection updates modalPlanName if user opens modal after selecting different plan.
+  // Also keep the selectedName text in sync with the modal (in case user selects plan after modal open).
+  const nameEl = document.getElementById('selectedName');
+  const observer = new MutationObserver(()=> {
+    if (nameEl) modalPlanName.innerText = nameEl.innerText || modalPlanName.innerText;
+  });
+  if (nameEl) observer.observe(nameEl, { childList:true, subtree:true, characterData:true });
+
+  // Clean up on page unload
+  window.addEventListener('beforeunload', () => { stopPricePolling(); stopTxPolling(); });
+
+})();
+
+
+  </script>
+</body>
+</html>
