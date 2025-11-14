@@ -3,15 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mint | SolBundler Nexus</title>
-  <link rel="stylesheet" href="style1.css" />
-  <link rel="stylesheet" href="mint.css" />
+  <title>Project 186947182 – Nexus</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="project.css" />
 </head>
 <body>
+
   <!-- CURSOR -->
   <div class="cursor-custom">
-    <svg class="cursor-shape" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2">
+    <svg class="cursor-shape" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M3 2 L20 12 L13.5 14 L11 22 Z" />
     </svg>
     <div class="cursor-core"></div>
@@ -19,292 +26,181 @@
   <div class="cursor-spotlight"></div>
   <div class="mesh-bg"></div>
 
-  <!-- PANEL HEADER -->
-  <div class="panel-header">
-    <button class="back-btn" onclick="history.back()">
-      <i data-lucide="arrow-left"></i>
-    </button>
-    <h3 class="panel-title">
-      <i data-lucide="folder-cog" class="title-icon"></i>
-      <span id="dynamicTitle">Project Creation | Mint</span>
-    </h3>
-  </div>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">
+  <img src="logo.jpeg" alt="Nexus Logo" class="sol-logo" />
+  <span>NEXUS</span>
+</div>
+
+     <nav class="nav">
+      <button class="nav-btn" onclick="location.href='dashboard.html'">
+  <i data-lucide="layout-dashboard"></i> Dashboard
+</button>
+
+<button class="nav-btn active">
+  <i data-lucide="package"></i> Projects
+</button>
+
+<button class="nav-btn" onclick="location.href='settings.html'">
+  <i data-lucide="wallet"></i> Settings
+</button>
+
+    </nav>
+  </header>
 
   <!-- MAIN -->
-  <main class="mint-container">
-    <!-- TABS --><br>
-    <div class="mint-tabs">
-      <button class="tab-btn active" data-tab="mint">
-        <i data-lucide="gem"></i> <span>Mint</span>
-      </button>
-      <button class="tab-btn" data-tab="comment">
-        <i data-lucide="message-circle"></i> <span>Comment</span>
-      </button>
-      <button class="tab-btn" data-tab="sell">
-        <i data-lucide="shopping-cart"></i> <span>Sell</span>
-      </button>
+  <main class="container">
+<br>
+    <!-- Project Header -->
+    <div class="project-header-card">
+      <div class="project-info">
+        <h1>Project | Untitled</h1>
+        <p class="project-meta">
+          Name: <strong>Untitled</strong> • Symbol: <strong>untitled</strong> •
+          <span class="status in-progress"><i data-lucide="clock"></i> In Progress</span>
+        </p>
+      </div>
+      <div class="project-time">19:51</div>
     </div>
 
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active" data-tab="metadata"><i data-lucide="file-text"></i> Token Metadata</button>
+      <button class="tab" data-tab="wallets"><i data-lucide="wallet"></i> Project Wallets</button>
+      <button class="tab" data-tab="swap"><i data-lucide="arrow-up-down"></i> Swap Manager</button>
+      <button class="tab" data-tab="launch"><i data-lucide="rocket"></i> Launch Options</button>
+      <button class="tab" data-tab="delete"><i data-lucide="trash-2"></i> Delete Project</button>
+    </div>
 
-    <!-- MINT TAB -->
-    <div id="mint-tab" class="tab-content active">
-      <!-- Wallet Upload -->
-      <div class="card glass-card">
+    <!-- METADATA TAB -->
+    <div class="tab-content active" id="metadata">
+      <div class="card">
         <div class="card-header">
-          <h3><i data-lucide="wallet"></i> Wallet Bundle</h3>
-          <div class="status-badge" id="walletStatus">
-            <i data-lucide="circle" class="badge-icon"></i> No file
-          </div>
-        </div>
-        <div class="upload-area" id="uploadArea">
-          <div class="upload-content" id="uploadContent">
-            <div class="upload-icon-wrapper">
-              <i data-lucide="upload-cloud" class="upload-icon"></i>
-            </div>
-            <p class="upload-title">Drop <strong>wallets.txt</strong> here</p>
-            <p class="upload-subtitle">or click to select</p>
-            <input type="file" id="walletFileInput" accept=".txt" hidden />
-          </div>
-        </div>
-        <button id="verifyWalletsBtn" class="btn-primary full-width" disabled>
-          <i data-lucide="shield-check"></i> Verify Wallets
-        </button>
-      </div>
-
-      <!-- Token Form -->
-      <div class="card glass-card mt-6">
-        <div class="card-header">
-          <h3><i data-lucide="settings"></i> Token Details</h3>
-        </div>
-
-        <div class="form-grid">
-          <div class="form-group">
-            <label>Name <span class="required">*</span></label>
-            <input type="text" id="tokenName" placeholder="Nebula Cat" maxlength="32" />
-            <div class="char-count" id="nameCount">0/32</div>
-          </div>
-          <div class="form-group">
-            <label>Symbol <span class="required">*</span></label>
-            <input type="text" id="tokenSymbol" placeholder="NEBULA" maxlength="10" />
-            <div class="char-count" id="symbolCount">0/10</div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Description <span class="required">*</span></label>
-          <textarea id="tokenDesc" rows="3" placeholder="Elite cat on Solana..."></textarea>
-          <div class="char-count" id="descCount">0/280</div>
-        </div>
-
-        <div class="form-grid">
-          <div class="form-group">
-            <label>Twitter</label>
-            <input type="url" id="twitter" placeholder="https://twitter.com/nebula" />
-          </div>
-          <div class="form-group">
-            <label>Telegram</label>
-            <input type="url" id="telegram" placeholder="https://t.me/nebula" />
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Website</label>
-          <input type="url" id="website" placeholder="https://nebula.cat" />
+          <h3><i data-lucide="alert-circle" class="warning"></i> Metadata not yet deployed</h3>
         </div>
 
         <!-- IMAGE UPLOAD -->
-        <div class="form-group">
-          <label>Token Image <span class="required">*</span></label>
-          <div class="image-upload" id="imageUpload">
-            <img id="previewImg" src="" alt="" style="display:none;" />
-            <div class="upload-placeholder" id="imagePlaceholder">
-              <i data-lucide="image"></i>
-              <p>Choose file</p>
-              <p class="upload-hint">JPG, PNG, GIF · Max 5 MB</p>
-            </div>
-            <input type="file" id="imageInput" accept="image/*" hidden />
+        <div class="upload-area" id="imageUploader">
+          <div class="upload-placeholder">
+            <i data-lucide="image" class="upload-icon"></i>
+            <p class="upload-text">Drop an image here or <span class="link">click to browse</span></p>
+            <input type="file" accept="image/*" id="imageInput" hidden />
           </div>
-          <div class="file-info" id="imageInfo" style="display:none;"></div>
+          <div class="upload-preview" id="previewContainer" style="display:none;">
+            <img id="previewImg" src="" alt="Preview" />
+            <button class="remove-btn" id="removeImg"><i data-lucide="x"></i></button>
+          </div>
+          <div class="upload-progress" id="progressContainer" style="display:none;">
+            <div class="progress-bar"><div id="progressFill"></div></div>
+            <span class="progress-text" id="progressText">0%</span>
+          </div>
         </div>
 
-     <br>   <!-- LAUNCH BUTTON (AESTHETIC GOLD) -->
-<div id="createSection">
-<button id="verifyWalletsBtn" class="create" disabled>
-  <i data-lucide="rocket"></i> Launch Token
-</button>
-
+        <!-- FORM GRID -->
+        <div class="metadata-grid">
+          <div class="field"><label>Name</label><input type="text" value="jj" placeholder="jj"></div>
+          <div class="field"><label>Symbol</label><input type="text" value="hh" placeholder="hh"></div>
+          <div class="field full"><label>Description</label><textarea>Not set</textarea></div>
+          <div class="field"><label>Twitter</label><input type="text" placeholder="Not set"></div>
+          <div class="field"><label>Telegram</label><input type="text" placeholder="Not set"></div>
+          <div class="field"><label>Website</label><input type="text" placeholder="Not set"></div><br>
+<div class="gold-divider">
+  <hr>
 </div>
+
+          <!-- SINGLE-COLUMN BUTTONS -->
+          <div class="field full btn-col">
+            <button class="btn primary" id="deployBtn"><i data-lucide="upload-cloud"></i> DEPLOY METADATA</button>
+
+            <button class="btn secondary" id="cloneBtn"><i data-lucide="copy"></i> CLONE METADATA</button>
+          </div>
+          <br>
+        </div>
+      </div>
+    </div><br>
+
+    <!-- WALLETS TAB -->
+    <div class="tab-content" id="wallets">
+      <div class="card">
+        <div class="wallet-actions">
+          <button class="btn primary" id="createWalletBtn"><i data-lucide="plus-circle"></i> Create Wallet</button>
+          <button class="btn secondary" id="importWalletsBtn"><i data-lucide="download"></i> Import Wallets</button>
+          <button class="btn secondary" id="importCreatorBtn"><i data-lucide="user-plus"></i> Import Creator</button>
+        </div>
+        <div class="wallet-list" id="walletList"></div>
+      </div>
+    </div>
+
+    <!-- SWAP TAB -->
+    <div class="tab-content" id="swap">
+      <div class="card">
+        <h3 class="section-title"><i data-lucide="arrow-up-down"></i> Swap Manager – jj</h3>
+        <p class="info">Selected wallets: <strong id="selectedCount">0</strong>/<strong id="totalCount">0</strong></p>
+
+        <div class="swap-grid">
+          <div class="field">
+            <label>Intervals between swaps</label>
+            <div class="input-group">
+              <input type="number" min="0" step="0.1" value="0.5" id="swapInterval">
+              <span class="unit">seconds</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>Amount: <span id="swapAmount">0</span> SOL</label>
+            <input type="number" step="0.01" value="0" id="swapSol">
+          </div>
+          <div class="field slider">
+            <label>%: <span id="percentValue">0%</span> – Token sell %</label>
+            <input type="range" class="range" min="0" max="100" value="0" id="percentSlider">
+          </div>
+        </div>
 <br>
+        <div class="stats-grid">
+          <div class="stat"><div class="label">B: <span id="statB">0.00</span> SOL</div><div class="value">$<span id="statBUSD">0.00</span></div></div>
+          <div class="stat"><div class="label">HOLD: <span id="statHold">0.00</span>%</div><div class="value">$<span id="statHoldUSD">0.00</span></div></div>
+          <div class="stat"><div class="label">PROFIT: <span id="statProfit">0.00</span> SOL</div><div class="value">$<span id="statProfitUSD">0.00</span></div></div>
+          <div class="stat"><div class="label">Liquidity: <span id="statLiq">0.00</span> SOL</div><div class="value">$<span id="statLiqUSD">0.00</span></div></div>
+        </div>
+<br><br>
+        <div class="swap-actions">
+          <button class="btn primary" id="worthSolBtn"><i data-lucide="check"></i> WORTH SOL</button>
+          <button class="btn secondary" id="solBtn"><i data-lucide="x"></i> SOL</button>
+          <button class="btn secondary" id="tokenPctBtn"><i data-lucide="percent"></i> TOKEN %</button>
+          <button class="btn secondary" id="refreshBtn"><i data-lucide="refresh-cw"></i> Refresh</button>
+        </div>
       </div>
     </div>
 
-    <!-- COMMENT TAB -->
-    <div id="comment-tab" class="tab-content">
-      <div class="card glass-card">
-        <div class="card-header">
-          <h3><i data-lucide="message-circle"></i> Auto Comment</h3>
-          <div class="status-badge" id="commentStatus">
-            <i data-lucide="circle" class="badge-icon"></i> Idle
-          </div>
-        </div>
+    <!-- LAUNCH TAB -->
+    <div class="tab-content" id="launch">
+      <div class="card">
+        <div class="launch-grid">
+          <button class="btn launch primary" id="launchBtn"><i data-lucide="zap"></i> Launch</button>
+          <button class="btn launch primary" id="launchBundleBtn"><i data-lucide="package"></i> Launch with Bundle</button>
+                    <button class="btn launch secondary" id="launchSnipeBtn"><i data-lucide="plus-circle"></i> Launch + Snipe</button>
+          <button class="btn launch secondary" id="bundleSnipeBtn"><i data-lucide="gift"></i> Launch + Bundle + Snipe</button>
+          <button class="btn launch secondary" id="autoTpBtn"><i data-lucide="target"></i> Auto TP</button>
+          <button class="btn launch secondary" id="smartSellBtn"><i data-lucide="brain"></i> Smart Sell</button>
 
-        <div class="form-group">
-          <label>Comment Message <span class="required">*</span></label>
-          <textarea id="commentMsg" rows="4" placeholder="LFG! Just minted 10K $NEBULA!"></textarea>
-          <div class="char-count" id="commentCount">0/280</div>
         </div>
-
-        <div class="form-grid">
-          <div class="form-group">
-            <label>Delay Between Comments</label>
-            <div class="input-with-unit">
-              <input type="number" id="commentDelay" value="3000" min="1000" step="100" />
-              <span class="unit">ms</span>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Max Comments per Wallet</label>
-            <input type="number" id="maxComments" value="3" min="1" max="10" />
-          </div>
-        </div>
-
-        <!-- CHECKLIST (AESTHETIC) -->
-        <div class="checklist-group">
-          <label class="checklist-item">
-            <input type="checkbox" id="commentOnPump" checked />
-            <span class="checkmark"></span>
-            <span class="label-text">Comment on Pump.fun</span>
-          </label>
-          <label class="checklist-item">
-            <input type="checkbox" id="commentOnRaydium" />
-            <span class="checkmark"></span>
-            <span class="label-text">Comment on Raydium</span>
-          </label>
-        </div>
-
-        <button id="startCommentBtn" class="btn-primary full-width" disabled>
-          <i data-lucide="play"></i> Start Auto Comment
-        </button>
       </div>
     </div>
 
-    <!-- SELL TAB -->
-    <div id="sell-tab" class="tab-content">
-      <div class="card glass-card">
-        <div class="card-header">
-          <h3><i data-lucide="shopping-cart"></i> Sell Token → Get SOL</h3>
-          <div class="status-badge" id="sellStatus">
-            <i data-lucide="circle" class="badge-icon"></i> Idle
-          </div>
-        </div>
-
-        <div class="sell-info-box">
-          <div class="info-row">
-            <span>Token Address</span>
-            <code id="tokenAddress">Not launched</code>
-          </div>
-          <div class="info-row">
-            <span>Current Price</span>
-            <span id="currentPrice">—</span>
-          </div>
-          <div class="info-row">
-            <span>Total Holdings</span>
-            <span id="totalHoldings">—</span>
-          </div>
-        </div>
-
-        <div class="form-grid">
-          <div class="form-group">
-            <label>Sell Amount</label>
-            <div class="input-with-suffix">
-              <input type="number" id="sellAmount" placeholder="0" min="0" step="0.01" />
-              <div class="suffix-group">
-                <button class="suffix-btn" data-percent="25">25%</button>
-                <button class="suffix-btn" data-percent="50">50%</button>
-                <button class="suffix-btn" data-percent="100">100%</button>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Min SOL to Receive</label>
-            <input type="number" id="minSol" step="0.001" placeholder="0.05" />
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Slippage Tolerance</label>
-          <div class="slider-container">
-            <input type="range" id="slippage" min="1" max="50" value="12" />
-            <div class="slider-labels">
-              <span>1%</span>
-              <span id="slippageValue">12%</span>
-              <span>50%</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- WITHDRAWAL ADDRESS TOGGLE -->
-        <div class="checklist-group">
-          <label class="checklist-item" >
-            <input type="checkbox" id="useDefaultWithdraw" />
-            <span class="checkmark"></span>
-            <span class="label-text">Use default withdrawal address</span>
-          </label>
-
-          <div id="defaultAddressBox" style="display:none;">
-            <div class="input-with-prefix">
-              <input type="text" id="defaultAddress" value="" readonly />
-              <div class="prefix">Wallet</div>
-            </div>
-          </div>
-
-          <div id="customAddressBox">
-            <input type="text" id="customWithdrawAddress" placeholder="Enter withdrawal address..." />
-          </div>
-        </div>
-
-        <!-- CHECKLIST (AESTHETIC) -->
-        <div class="checklist-group">
-          <label class="checklist-item">
-            <input type="checkbox" id="sellOnPump" checked />
-            <span class="checkmark"></span>
-            <span class="label-text">Sell via Pump.fun</span>
-          </label>
-          <label class="checklist-item">
-            <input type="checkbox" id="sellOnRaydium" />
-            <span class="checkmark"></span>
-            <span class="label-text">Sell via Raydium</span>
-          </label>
-        </div>
-
-        <button id="enableSellBtn" class="btn-launch full-width" disabled>
-          <i data-lucide="zap"></i> Enable Auto Sell
-        </button>
+    <!-- DELETE TAB -->
+    <div class="tab-content" id="delete">
+      <div class="card delete-card">
+        <i data-lucide="alert-triangle" class="warning-icon"></i>
+        <h3>Delete Project</h3>
+        <p>This action is <strong>irreversible</strong>. All data will be permanently deleted.</p>
+        <button class="btn danger" id="deleteProjectBtn"><i data-lucide="trash-2"></i> Delete Project</button>
       </div>
     </div>
+
   </main>
 
-  <!-- MODAL -->
-  <div id="verifyPopup" class="modal" style="display:none;">
-    <div class="modal-content verify-modal">
-      <div class="modal-header">
-        <h3><i data-lucide="shield-check"></i> Wallet Verification</h3>
-        <button class="close-modal" onclick="closeVerify()">
-          <i data-lucide="x"></i>
-        </button>
-      </div>
-      <div id="verifyResult" class="verify-result">
-        <div class="loader"></div>
-        <p class="verify-text">Reading wallets...</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- TOAST -->
-  <div id="toastContainer"></div>
-
   <!-- STATUS BAR -->
-  <div class="status-bar">
+<div class="status-bar">
     <div class="price-box">
       <img src="sol.svg" alt="SOL" class="sol-icon-tiny">
       <span>SOL: $0.00</span>
@@ -315,17 +211,10 @@
     </div>
   </div>
 
-  <!-- GLOBAL STATE -->
-  <script>
-    window.verifiedWallets = false;
-    window.wallets = [];
-    window.uploadedFile = null;
-    window.checkForm = () => {};
-  </script>
+  <!-- TOAST CONTAINER -->
+  <div id="toastContainer"></div>
 
-  <!-- SCRIPTS -->
-  <script src="script1.js"></script>
-  <script src="wallet-upload.js"></script>
-  <script src="mint.js"></script>
+  <!-- Scripts -->
+  <script src="project.js"></script>
 </body>
 </html>
