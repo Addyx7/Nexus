@@ -33,14 +33,12 @@ document.addEventListener('DOMContentLoaded', () => {
   setInterval(updateSolPrice, 5000);
 
   /* ==== CURSOR ==== */
-  const cursor = document.querySelector('.cursor-custom');
   const spotlight = document.querySelector('.cursor-spotlight');
   let mx = 0, my = 0, cx = 0, cy = 0;
   const speed = 0.16;
   const animate = () => {
     const dx = mx - cx, dy = my - cy;
     cx += dx * speed; cy += dy * speed;
-    cursor.style.left = `${cx}px`; cursor.style.top = `${cy}px`;
     spotlight.style.left = `${mx}px`; spotlight.style.top = `${my}px`;
     document.documentElement.style.setProperty('--mouse-x', `${mx}px`);
     document.documentElement.style.setProperty('--mouse-y', `${my}px`);
