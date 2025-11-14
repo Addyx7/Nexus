@@ -30,7 +30,7 @@
         <i data-lucide="layout-dashboard"></i> Dashboard
       </button>
       <button class="nav-btn active" data-page="bundles">
-        <i data-lucide="package"></i> Bundles
+        <i data-lucide="package"></i> Projects
       </button>
       <button class="nav-btn" data-page="wallets" onclick="window.location.href='settings.html'">
         <i data-lucide="wallet"></i> Settings
@@ -56,7 +56,7 @@
       <div class="stat-item">
         <i data-lucide="folder-open" class="stat-icon"></i>
         <div class="stat-value" id="totalGroups">1</div>
-        <div class="stat-label">Total Groups</div>
+        <div class="stat-label">Total Projects</div>
       </div>
       <div class="stat-item">
         <i data-lucide="wallet" class="stat-icon"></i>
@@ -66,7 +66,7 @@
       <div class="stat-item">
         <i data-lucide="zap" class="stat-icon"></i>
         <div class="stat-value">0</div>
-        <div class="stat-label">Active Bundles</div>
+        <div class="stat-label">Active Projects</div>
       </div>
       <div class="stat-item">
         <div class="stat-value1"><img src="sol.svg" alt="SOL" class="sol-logo"> 0.00</div>
@@ -79,9 +79,9 @@
       <!-- GROUPS LIST -->
       <div class="card project-card bundle-wider">
         <div class="card-header">
-          <h3><i data-lucide="folders"></i> Bundle Groups</h3>
+          <h3><i data-lucide="folders"></i> Project Groups</h3>
           <button class="create" id="newGroupBtn" style="padding: .5rem 1rem; font-size: .85rem;">
-            <i data-lucide="plus"></i> New Group
+            <i data-lucide="plus"></i> New Project
           </button>
         </div>
         <div class="project-list" id="groupList">
@@ -92,31 +92,31 @@
                 <i data-lucide="folder" style="width: 20px; height: 20px; stroke: var(--gold);"></i>
               </div>
               <div>
-                <div class="project-name">Untitled Group</div>
+                <div class="project-name">Untitled Project</div>
                 <div class="project-status pending"><i data-lucide="clock"></i> 0 wallets</div>
               </div>
             </div>
             <div>
               <button class="view-wallets-btn view-all" style="font-size: .8rem; padding: .4rem .8rem; background: rgba(244,240,176,.1); border-radius: 999px;"  onclick="window.location.href='mint.html'">
-                View Wallets <i data-lucide="arrow-right"></i>
+                View <i data-lucide="arrow-right"></i>
               </button>
             </div>
           </div>
           <!-- EMPTY STATE -->
           <div id="emptyGroupState" style="text-align: center; padding: 2rem; color: var(--text-muted); font-size: .9rem;">
             <i data-lucide="folder-plus" style="width: 32px; height: 32px; margin-bottom: .5rem; opacity: .5;"></i>
-            <p>No additional groups yet. Create one to start bundling.</p>
+            <p>No additional project yet. Create one to start bundling.</p>
           </div>
         </div>
       </div>
 
       <!-- ACTIVITY PLACEHOLDER -->
       <div class="card chart-card">
-        <h3 class="chart-title"><i data-lucide="activity"></i> Bundle Activity</h3>
+        <h3 class="chart-title"><i data-lucide="activity"></i> Project Activity</h3>
         <div style="height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; color: var(--text-muted); font-size: .9rem;">
           <i data-lucide="trending-up" style="width: 48px; height: 48px; margin-bottom: 1rem; opacity: .3;"></i>
           <p>No active bundles</p>
-          <p style="margin-top: .5rem; font-size: .8rem;">Launch your first bundle to see stats</p>
+          <p style="margin-top: .5rem; font-size: .8rem;">Launch your first project to see stats</p>
         </div>
       </div>
     </section>
@@ -124,9 +124,9 @@
     <!-- READY TO LAUNCH CTA -->
     <section class="card" style="margin-top: 1.5rem; text-align: center; padding: 2rem;">
       <h3 style="margin-bottom: .5rem; color: var(--gold);">Ready to Launch?</h3>
-      <p style="color: var(--text-muted); margin-bottom: 1.2rem;">Create a new bundle group and add wallets to start sniping.</p>
+      <p style="color: var(--text-muted); margin-bottom: 1.2rem;">Create a new project group and add wallets to start sniping.</p>
       <button class="create" id="bottomCreateBtn" style="padding: .8rem 1.8rem; font-size: 1rem; display: inline-flex; align-items: center; gap: .5rem;">
-        <i data-lucide="plus-circle"></i> Create New Bundle Group
+        <i data-lucide="plus-circle"></i> Create New Project
       </button>
     </section>
   </main>
@@ -136,17 +136,17 @@
   <div id="createGroupModal" class="modal" style="display: none;">
     <div class="modal-content">
       <div class="modal-header">
-        <h3><i data-lucide="folder-plus"></i> Create Bundle Group</h3>
+        <h3><i data-lucide="folder-plus"></i> Create Project</h3>
         <button class="modal-close"><i data-lucide="x"></i></button>
       </div>
       <form id="createGroupForm">
         <div class="form-group">
-          <label for="groupName">Group Name</label>
+          <label for="groupName">Project Name</label>
           <input type="text" id="groupName" placeholder="e.g., Sniper Alpha" required />
         </div>
         <div class="modal-actions">
           <button type="button" class="modal-close btn-secondary">Cancel</button>
-          <button type="submit" class="create">Create Group</button>
+          <button type="submit" class="create">Create Project</button>
         </div>
       </form>
     </div>
@@ -266,5 +266,6 @@
 </body>
 
 </html>
+
 
 
