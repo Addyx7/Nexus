@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Referral – SolBundler Nexus</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <!-- Core Styles -->
+  <link rel="stylesheet" href="style1.css" />
+  <link rel="stylesheet" href="project.css" />
+
+  <!-- Subscription-Like Theme for Referral -->
+  <style>
+    :root {
+      --gold: #f4f0b0;
+      --gold-dark: #d4af37;
+      --profit: #4ade80;
+      --bg: #000;
+      --glass: rgba(25, 32, 31, 0.7);
+      --border: rgba(244, 240, 176, 0.12);
+      --border-glow: rgba(244, 240, 176, 0.3);
+      --text: #eaeaea;
+      --text-muted: #b5b5b5;
+      --radius: 20px;
+      --blur: blur(16px);
+      --ease: cubic-bezier(0.25, 1, 0.3, 1);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+    }
+
+    .plan-card {
+      background: var(--glass);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      backdrop-filter: var(--blur);
+      box-shadow: var(--shadow);
+      transition: all .4s var(--ease);
+      position: relative;
+      overflow: hidden;
+    }
+    .plan-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(244,240,176,.05), transparent 70%);
+      opacity: 0; transition: opacity .4s;
+    }
+    .plan-card:hover::before { opacity: 1; }
+    .plan-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--gold);
+      box-shadow: 0 20px 50px rgba(244,240,176,.22);
+    }
+
+    .plan-title {
+      display: flex; align-items: center; gap: .6rem;
+      font-size: 1.3rem; font-weight: 700; color: var(--gold); margin-bottom: .8rem;
+    }
+
+    .input-group {
+      display: flex; gap: .8rem; align-items: center; margin-top: 1rem;
+    }
+    .ref-input {
+      flex: 1; padding: .9rem 1.2rem;
+      background: rgba(244,240,176,.08); border: 1px dashed rgba(244,240,176,.3);
+      border-radius: 12px; color: var(--text); font-family: 'JetBrains Mono';
+      font-size: 1rem; transition: all .3s var(--ease);
+    }
+    .ref-input:focus {
+      outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(244,240,176,.2);
+    }
+    .ref-input:disabled {
+      opacity: 0.7; cursor: not-allowed;
+    }
+
+    .btn-golden {
+      background: linear-gradient(135deg, rgba(244,240,176,0.15), rgba(244,240,176,0.05));
+      border: 1.5px solid rgba(244,240,176,.4);
+      color: var(--gold); padding: .9rem 2rem; border-radius: 999px;
+      font-weight: 700; font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; gap: .6rem;
+      transition: .3s; box-shadow: 0 6px 15px rgba(244,240,176,.15);
+    }
+    .btn-golden:hover {
+      transform: translateY(-3px); border-color: var(--gold);
+      background: rgba(244,240,176,.25); box-shadow: 0 12px 30px rgba(244,240,176,.3);
+    }
+
+    .alert-warning {
+      background: rgba(251,146,60,.12); border: 1px solid rgba(251,146,60,.3);
+      color: #fb923c; padding: 1rem 1.2rem; border-radius: 12px;
+      font-size: .95rem; margin: 1.5rem 0; display: flex; align-items: center; gap: .6rem;
+    }
+
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.2rem; margin: 1.5rem 0;
+    }
+    .stat-item {
+      background: rgba(15,15,20,.9); border: 1px solid rgba(244,240,176,.15);
+      border-radius: 14px; padding: 1.2rem; text-align: center;
+    }
+    .stat-label { font-size: .85rem; color: var(--text-muted); }
+    .stat-value { font-size: 1.35rem; font-weight: 800; color: var(--gold); font-family: 'JetBrains Mono'; margin-top: .3rem; }
+    .stat-value.zero { color: #666; }
+
+    .tier-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;
+    }
+    .tier-card {
+      background: rgba(15,15,20,.9); border: 1px solid rgba(244,240,176,.15);
+      border-radius: 14px; padding: 1rem; text-align: center;
+    }
+    .tier-label { font-size: .9rem; color: var(--text-muted); }
+    .tier-count { font-size: 1.25rem; font-weight: 700; color: var(--gold); margin-top: .3rem; }
+
+    .btn-withdraw {
+      background: linear-gradient(135deg, #22c55e, #16a34a); color: white;
+      border: none; padding: .9rem 2rem; border-radius: 999px; font-weight: 700;
+      width: 100%; margin-top: 1.5rem; display: flex; align-items: center;
+      justify-content: center; gap: .6rem; cursor: not-allowed; opacity: .5;
+      transition: all .3s var(--ease); font-size: .95rem;
+    }
+    .btn-withdraw.enabled { opacity: 1; cursor: pointer; }
+    .btn-withdraw.enabled:hover {
+      transform: translateY(-3px); box-shadow: 0 12px 30px rgba(34,197,94,.3);
+    }
+
+    .copy-group {
+      display: flex; align-items: center; gap: .6rem; background: rgba(244,240,176,.08);
+      padding: .7rem 1rem; border-radius: 12px; font-family: 'JetBrains Mono';
+      font-size: .9rem; border: 1px dashed rgba(244,240,176,.25); margin-top: .8rem;
+    }
+    .copy-btn { background: none; border: none; color: var(--gold); cursor: pointer; }
+
+    .how-section {
+      background: var(--glass); border: 1.5px solid var(--border);
+      border-radius: var(--radius); padding: 2rem; margin-top: 2rem;
+      backdrop-filter: var(--blur); box-shadow: var(--shadow);
+    }
+    .how-title {
+      display: flex; align-items: center; gap: .6rem; font-size: 1.35rem;
+      color: var(--gold); margin-bottom: 1.2rem; font-weight: 700;
+    }
+    .reward-list { list-style: none; margin: 1rem 0; }
+    .reward-item {
+      display: flex; align-items: flex-start; gap: .8rem; margin-bottom: .9rem;
+      font-size: .98rem;
+    }
+    .reward-tier { font-weight: 700; color: var(--gold); min-width: 110px; }
+    .example-box {
+      background: rgba(244,240,176,.06); border-radius: 12px; padding: 1.2rem;
+      margin: 1.5rem 0; font-family: 'JetBrains Mono'; font-size: .95rem;
+      color: var(--text-muted);
+    }
+    .example-box strong { color: var(--gold); }
+
+    @media (max-width: 768px) {
+      .stats-grid, .tier-grid { grid-template-columns: 1fr; }
+      .input-group { flex-direction: column; }
+      .btn-golden { width: 100%; justify-content: center; }
+    }
+
+    /* ---- DECORATIVE LAYERS (no clicks) ---- */
+    .cursor-spotlight,
+    .mesh-bg {
+      pointer-events: none;
+    }
+
+    /* ---- FORCE ALL INTERACTIVE ELEMENTS TO BE CLICKABLE ---- */
+    input, button, .copy-btn, .btn-golden, .btn-withdraw {
+      pointer-events: auto !important;
+      position: relative;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+
+<div id="toastContainer" style="position:fixed; top:1rem; left:100%; z-index:9999; pointer-events:none;"></div>
+  <div class="cursor-spotlight"></div>
+  <div class="mesh-bg"></div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">
+      <img src="logo.jpeg" alt="Nexus Logo" class="sol-logo" />
+      <span>NEXUS</span>
+    </div>
+    <nav class="nav">
+      <button class="nav-btn" onclick="location.href='dashboard.html'"><i data-lucide="layout-dashboard"></i> Dashboard</button>
+      <button class="nav-btn active"><i data-lucide="users"></i> Referral</button>
+      <button class="nav-btn" onclick="location.href='subscription.html'"><i data-lucide="badge-check"></i> Subscription</button>
+      <button class="nav-btn" onclick="location.href='settings.html'"><i data-lucide="wallet"></i> Settings</button>
+      <button class="nav-btn create" onclick="location.href='bundle.html'"><i data-lucide="plus-circle"></i> Create Project</button>
+    </nav>
+  </header>
+
+  <!-- MAIN -->
+  <main class="container" style="max-width: 1100px; padding: 2rem 1.5rem;">
+
+    <!-- Referral Code Card -->
+    <div class="plan-card">
+      <div class="plan-title"><i data-lucide="link-2"></i> Your Referral Code</div>
+      <p style="color: var(--text-muted); font-size: .9rem; margin-bottom: .4rem;">
+        Referred By: <strong>—</strong>
+      </p>
+      <p style="color: var(--text-muted); font-size: .88rem; margin-bottom: 1rem;">
+        <strong>Create Your Unique Referral Code</strong><br>
+        This code will be permanent and cannot be changed. Choose wisely (3-20 characters, letters, numbers, and underscores only).
+      </p>
+      <div class="input-group">
+        <input type="text" class="ref-input" placeholder="e.g., my_awesome_code" id="refCodeInput" maxlength="20" />
+        <button class="btn-golden" id="createCodeBtn"><i data-lucide="plus"></i> Create Code</button>
+      </div>
+
+      <div id="refLinkBox" style="display:none; margin-top:1.2rem;">
+        <p style="color:var(--text-muted);font-size:.9rem;">Your Referral Link</p>
+        <div class="copy-group">
+          <span id="refLinkText"></span>
+          <button class="copy-btn" id="copyRefBtn"><i data-lucide="copy"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Referral Wallet Card -->
+    <div class="plan-card">
+      <div class="plan-title"><i data-lucide="wallet"></i> Referral Wallet</div>
+
+      <div class="alert-warning">
+        <i data-lucide="alert-circle"></i>
+        <div>
+          <strong>Wallet Not Activated</strong><br>
+          Your referral wallet needs a minimum balance of <strong>0.001 SOL</strong> to be activated.
+        </div>
+      </div>
+
+      <p style="color: var(--text-muted); font-size: .9rem; margin: .6rem 0 .4rem;">Wallet Address</p>
+      <div class="copy-group">
+        <span id="walletAddress">HSAUM8Q98W1xHM14P8BNuC9kQ2VRFKUc4ByC3kL2mN</span>
+        <button class="copy-btn" id="copyAddressBtn"><i data-lucide="copy"></i></button>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-item"><div class="stat-label">Current Balance</div><div class="stat-value zero">0.000000 SOL</div></div>
+        <div class="stat-item"><div class="stat-label">Total Earned</div><div class="stat-value zero">0.000000 SOL</div></div>
+        <div class="stat-item"><div class="stat-label">Total Withdrawn</div><div class="stat-value zero">0.000000 SOL</div></div>
+        <div class="stat-item"><div class="stat-label">Available to Withdraw</div><div class="stat-value zero">0.000000 SOL</div></div>
+      </div>
+
+      <div class="tier-grid">
+        <div class="tier-card"><div class="tier-label">Tier 1 Referrals</div><div class="tier-count">0 <small style="color:#888;">direct referrals</small></div></div>
+        <div class="tier-card"><div class="tier-label">Tier 2 Referrals</div><div class="tier-count">0 <small style="color:#888;">sub-referrals</small></div></div>
+      </div>
+
+      <button class="btn-withdraw" id="withdrawBtn" disabled>
+        <i data-lucide="arrow-down-circle"></i> Withdraw Funds
+        <small style="margin-left:.5rem;opacity:.8;font-weight:500;">Wallet must be activated (0.001 SOL minimum)</small>
+      </button>
+    </div>
+
+    <!-- How It Works -->
+    <div class="how-section plan-card">
+      <div class="how-title"><i data-lucide="zap"></i> How It Works</div>
+
+      <div class="reward-list">
+        <div class="reward-item">
+          <div class="reward-tier">Referral Rewards:</div>
+          <div>
+            <strong>Tier 1 (Direct Referrals):</strong><br>
+            • Regular users: <strong>25%</strong> of platform commission (0.25% of transaction)<br>
+            • Influencers: <strong>35%</strong> of platform commission (0.35% of transaction)
+          </div>
+        </div>
+        <div class="reward-item">
+          <div class="reward-tier">Tier 2 (Sub-Referrals):</div>
+          <div>
+            • Regular users: <strong>5%</strong> of platform commission (0.05% of transaction)<br>
+            • Influencers: <strong>5%</strong> of platform commission (0.05% of transaction)
+          </div>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <strong>Example Calculation</strong><br>
+        If user (your referral) sells tokens worth <strong>10 SOL</strong> (platform fee = 0.5% = 0.05 SOL):<br>
+        • You (Tier 1) earn <strong>25%</strong> of 0.05 = <strong>0.0125 SOL</strong><br>
+        • Your sub-referral (Tier 2) earns <strong>5%</strong> of 0.05 = <strong>0.0025 SOL</strong>
+      </div>
+
+      <div style="margin-top:1.5rem;font-size:.9rem;color:var(--text-muted);">
+        <strong>Activation & Withdrawal</strong><br>
+        • Your referral wallet must have at least <strong>0.001 SOL</strong> to be activated<br>
+        • Withdrawals leave <strong>0.001 SOL</strong> as minimum balance<br>
+        • All rewards are automatically credited to your referral wallet
+      </div>
+    </div>
+
+  </main>
+
+  <!-- STATUS BAR -->
+  <div class="status-bar">
+    <div class="price-box"><img src="sol.svg" alt="SOL" class="sol-icon-tiny"><span>SOL: $0.00</span></div>
+    <div class="conn-box"><span class="status-dot"></span><span>Telegram Connected</span></div>
+  </div>
+
+
+  <!-- SCRIPTS -->
+  <script src="referrals.js"></script>
+  <script src="script1.js"></script>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
