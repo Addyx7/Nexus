@@ -23,7 +23,7 @@
   background: rgba(15,15,20,0.98); border: 1.5px solid rgba(244,240,176,0.15); border-radius: 24px; 
   backdrop-filter: blur(20px); box-shadow: 0 16px 40px rgba(0,0,0,0.35); overflow: hidden;
 }
-.chart-card { height: 495px; padding: 1.8rem;   background: rgba(244,240,176,0.05);
+.chart-card { height: 495px;   background: rgba(244,240,176,0.05);
   border: 1px solid rgba(244,240,176,0.15);
   border-radius: 16px;}
 .trades-card { margin-top: 1.6rem; height: 462px; padding: 1.6rem;   background: rgba(244,240,176,0.05);
@@ -573,4 +573,9 @@
   transform: translateY(-6px) scale(1.05);
   border-color: rgba(244,240,176,0.35);
   box-shadow: 0 14px 30px rgba(244,240,176,0.20);
+}
+.tradingview-widget-container,
+.tradingview-widget-container__widget {
+    width: 100% !important;
+    height: 100% !important;
 }

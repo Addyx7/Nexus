@@ -3,8 +3,8 @@ lucide.createIcons();
 
 let pumpChart = null;
 
-// ================== REAL PUMP.FUN CHART (CORRECT CA) ==================
-const CA = "CHNNEnqrjxXXuwiTBLgeMY798r1TqZ7zMSVwBYaZpump";   // CORRECT CONTRACT ADDRESS
+// REAL LIVE TOKEN: Grok (GROK) on pump.fun
+const CA = "3gsmySNUPuwUgHUUxKA7GoN2fyuvHyU1pR5eW9G8Vpump";
 
 async function renderPumpChart(ca) {
   try {
