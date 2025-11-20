@@ -1,0 +1,576 @@
+.coin-container { max-width: 1280px; margin: 0 auto; padding: 1.6rem 1.4rem 4rem; }
+.coin-header { 
+    background: rgba(244,240,176,0.05);
+  border: 1px solid rgba(244,240,176,0.15);
+  border-radius: 16px; border: 1.5px solid rgba(244,240,176,0.18); border-radius: 26px; 
+  padding: 1.8rem 2rem; backdrop-filter: blur(20px); display: grid; grid-template-columns: auto 1fr; 
+  gap: 2rem; align-items: center; box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+.coin-info h1 { font-size: 2.3rem; margin: 0; color: var(--gold); font-weight: 800; letter-spacing: -1px; }
+.coin-tagline { margin: 0.3rem 0 0.8rem; font-size: 0.94rem; color: #b5b5b5; }
+.coin-ca { background: rgba(244,240,176,0.09); border: 1px solid rgba(244,240,176,0.25); padding: 0.75rem 1rem; border-radius: 14px; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; display: flex; align-items: center; gap: 0.7rem; }
+
+.stats-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 1.2rem; }
+.stat-item { text-align: center; padding: 1rem; background: rgba(244,240,176,0.05); border-radius: 16px; border: 1px solid rgba(244,240,176,0.15); }
+.stat-item i { width: 26px; height: 26px; stroke: var(--gold); margin-bottom: 0.5rem; }
+.stat-item .value { font-size: 1.4rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--gold); }
+.stat-item.profit .value, .stat-item.profit i { color: #4ade80; stroke: #4ade80; }
+.stat-item.caution .value { color: #fb923c; }
+.stat-item .label { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.3rem; }
+
+.coin-body { display: grid; grid-template-columns: 1fr 400px; gap: 1.6rem; margin-top: 1.6rem; }
+.left-column > *, .right-column > * { 
+  background: rgba(15,15,20,0.98); border: 1.5px solid rgba(244,240,176,0.15); border-radius: 24px; 
+  backdrop-filter: blur(20px); box-shadow: 0 16px 40px rgba(0,0,0,0.35); overflow: hidden;
+}
+.chart-card { height: 495px; padding: 1.8rem;   background: rgba(244,240,176,0.05);
+  border: 1px solid rgba(244,240,176,0.15);
+  border-radius: 16px;}
+.trades-card { margin-top: 1.6rem; height: 462px; padding: 1.6rem;   background: rgba(244,240,176,0.05);
+  border: 1px solid rgba(244,240,176,0.15);
+  border-radius: 16px;}
+.card-title { font-size: 1.26rem; font-weight: 700; color: var(--gold); display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.2rem; }
+
+
+    .token-header {background:rgba(244,240,176,0.07);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;display:flex;gap:2rem;align-items:center;position:relative;overflow:hidden;}
+    .token-header::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(244,240,176,0.08),transparent 70%);opacity:0.6;}
+    .token-icon img{width:96px;height:96px;object-fit:cover;border-radius:16px;border:2px solid var(--gold);}
+    .token-title h1{font-size:2.4rem;margin:0;display:flex;align-items:center;gap:1rem;}
+    .token-price{font-size:2.8rem;font-weight:800;color:var(--gold);font-family:'JetBrains Mono',monospace;}
+    .pnl{font-size:1.4rem;font-weight:700;}
+    .pnl.negative{color:var(--loss);}
+    .bonding-info{background:var(--glass);border:1px solid var(--border);border-radius:var(--radius);padding:1.6rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.4rem;}
+    .bonding-item{display:flex;flex-direction:column;}
+    .bonding-item .label{font-size:.88rem;color:var(--text-muted);}
+    .bonding-item .value{font-size:1.25rem;font-weight:700;color:var(--gold);font-family:'JetBrains Mono',monospace;}
+    .bonding-curve{height:180px;background:var(--glass);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;position:relative;overflow:hidden;}
+    .curve-percentage{position:absolute;top:1rem;right:1rem;font-size:2.8rem;font-weight:900;color:var(--gold);opacity:0.12;}
+    .table{border-collapse:collapse;width:100%;font-size:.94rem;}
+    .table th{background:rgba(244,240,176,0.07);text-align:left;padding:1rem .8rem;color:var(--gold);}
+    .table td{padding:.9rem .8rem;border-top:1px solid rgba(244,240,176,0.08);}
+    .wallet-tag{padding:.25rem .65rem;border-radius:999px;font-size:.76rem;font-weight:600;}
+    .dev{background:rgba(244,240,176,0.25);color:var(--gold);}
+    .distro{background:rgba(74,222,128,0.2);color:var(--profit);}
+    .sol-amount{font-family:'JetBrains Mono',monospace;}
+    .percent-btn{background:rgba(244,240,176,0.12);border:1px solid rgba(244,240,176,0.3);color:var(--gold);padding:.4rem .8rem;border-radius:999px;font-size:.8rem;cursor:pointer;transition:.2s;}
+    .percent-btn:hover{background:rgba(244,240,176,0.25);}
+    .sell-all-dev{background:#d4af37;color:#000;font-weight:800;}
+/* =========================================================
+   SELL PANEL – GLASSMORPHIC GOLD EDITION ($1M AESTHETIC)
+   ========================================================= */
+.sell-panel {
+  padding: 2rem;
+  background: rgba(244,240,176,0.06);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(244,240,176,0.18);
+  border-radius: 20px;
+  box-shadow: 0 0 40px rgba(212,175,55,0.15);
+}
+
+/* HEADER */
+.sell-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.6rem;
+  color: var(--gold);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* INPUT */
+#sellAmount {
+  width: 100%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(244,240,176,0.25);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 1.1rem;
+  color: white;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 1.35rem;
+  text-align: center;
+  margin-bottom: 1.3rem;
+  box-shadow: inset 0 0 12px rgba(244,240,176,0.2);
+}
+
+/* SLIDER */
+.slider {
+  height: 10px;
+  background: rgba(244,240,176,0.12);
+  border-radius: 6px;
+  margin: 1.4rem 0;
+  position: relative;
+}
+.fill {
+  height: 100%;
+  width: 50%;
+  background: linear-gradient(90deg, #f4f0b0, #d4af37);
+  border-radius: 6px;
+  box-shadow: 0 0 30px rgba(244,240,176,0.8);
+  transition: width 0.4s ease;
+}
+
+/* % BUTTONS */
+.percent-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.9rem;
+  margin: 1rem 0;
+}
+.percent-buttons button {
+  padding: 0.85rem;
+  background: rgba(244,240,176,0.07);
+  border: 1px solid rgba(244,240,176,0.22);
+  backdrop-filter: blur(10px);
+  border-radius: 14px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: var(--gold);
+  transition: all 0.3s;
+}
+.percent-buttons button.active {
+  background: linear-gradient(135deg, #f4f0b0, #d4af37);
+  color: #000;
+  box-shadow: 0 0 25px rgba(244,240,176,0.4);
+}
+
+/* GOLD GLASSMORPHIC SELL BUTTON */
+.btn-sell-golden {
+  position: relative;
+  width: 100%;
+  padding: 1.45rem;
+  background: rgba(244,240,176,0.12);
+  border: 1px solid rgba(244,240,176,0.28);
+  backdrop-filter: blur(18px);
+  color: #f4f0b0;
+  border-radius: 20px;
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-align: center;
+  cursor: pointer;
+  overflow: hidden;
+  margin-top: 1.5rem;
+  box-shadow: 0 12px 35px rgba(212,175,55,0.35);
+  transition: all 0.4s ease;
+  letter-spacing: 0.6px;
+}
+
+/* BUTTON HOVER EFFECT */
+.btn-sell-golden:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 50px rgba(212,175,55,0.55);
+  border-color: rgba(244,240,176,0.45);
+}
+
+/* INSIDE GLOW */
+.btn-sell-golden .glow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.1),
+    rgba(255,255,255,0.35)
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.btn-sell-golden:hover .glow {
+  opacity: 1;
+  animation: pulse 2.5s infinite;
+}
+
+/* PULSE EFFECT */
+@keyframes pulse {
+  0% { opacity: 0.4; }
+  50% { opacity: 1; }
+  100% { opacity: 0.4; }
+}
+
+/* SUMMARY TEXT */
+.summary {
+  text-align: center;
+  margin-top: 1.4rem;
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  letter-spacing: 0.3px;
+}
+.summary strong {
+  color: var(--gold);
+  font-size: 1.45rem;
+}
+
+
+/* POSITION */
+.position-panel {
+  width: 100%;
+  height: 495px; /* match grid item height */
+  padding: 0.9rem;          /* reduced for equal look */
+  grid-column: span 3;        /* smaller spacing */
+  
+  background: rgba(244,240,176,0.05);
+  border: 1px solid rgba(244,240,176,0.15);
+  border-radius: 16px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.position-panel.full {
+  grid-column: span 4;
+  width: 100%;
+  height: 110px; /* match grid item height */
+  
+  padding: 0.9rem;
+  background: rgba(244,240,176,0.05);
+  border: 1px solid rgba(244,240,176,0.15);
+  border-radius: 16px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+.position-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.9rem;
+  margin-bottom: 1.4rem;
+}
+
+.position-grid > div {
+  /* 🔥 Perfect equal size */
+  width: 113.7px;
+  height: 113.7px; /* fixed height so text never changes size */
+
+  /* Center content */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;     /* vertical center */
+  align-items: center;         /* horizontal center */
+  text-align: center;
+
+  /* UI styling */
+  padding: 0.6rem;
+  background: rgba(244,240,176,0.05);
+  border-radius: 16px;
+  border: 1px solid rgba(244,240,176,0.15);
+
+  overflow: hidden;            /* prevents layout breaking */
+}
+
+.position-grid i {
+  width: 28px;
+  height: 22px;
+  stroke: var(--gold);
+  margin-bottom: 0.35rem;
+}
+
+
+
+.position-grid .profit i { stroke: #4ade80; }
+.position-grid .sold i { stroke: #ff4444; }
+
+.position-grid div:nth-child(2) {
+  color: var(--gold);
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.1rem;
+}
+
+.position-grid div:nth-child(3) {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+
+.pnl-box {
+  background: linear-gradient(135deg, rgba(74,222,128,0.15), rgba(34,197,94,0.08));
+  border: 1.2px solid rgba(74,222,128,0.4);
+  border-radius: 12px;
+  padding: 0.6rem;
+  text-align: center;
+  transform: scale(1);
+}
+
+.pnl-box .title {
+  color: #4ade80;
+  font-size: 0.78rem;
+  display: flex;
+  align-items: top;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-bottom: 0.3rem;
+}
+
+.pnl-box .amount {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #4ade80;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.pnl-box .percent {
+  font-size: 1rem;
+  color: #4ade80;
+  margin: 0.25rem 0;
+}
+
+.pnl-box .usd {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+
+@media (max-width: 1100px) { .coin-body { grid-template-columns: 1fr; } .right-column { max-width: 420px; margin: 0 auto; } }
+@keyframes pulse { 0%,100% { opacity: 0; } 50% { opacity: 0.6; } }
+
+.coin-tagline {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.coin-logo-wrap {
+  width: 32px;
+  height: 32px;
+  padding: 0.1px;
+  border-radius: 50%;
+  border: 2px solid rgba(244,240,176,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px rgba(244,240,176,0.35);
+
+  margin-left: 15px;   /* ⭐ added small left margin */
+}
+
+.coin-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.sell-title {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.minus-icon-wrap {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid rgba(244,240,176,.3); /* red-ish border for SELL */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0px 24px rgba(244,240,176,.25);
+}
+
+.minus-icon-wrap svg {
+  width: 16px;
+  height: 16px;
+  stroke: var(--gold); /* red SELL color */
+}
+
+
+.payment-toggle {
+      background: rgba(244,240,176,.1);
+      border: 1.5px solid rgba(244,240,176,.3);
+      color: var(--gold);
+      padding: .8rem 1.6rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: .95rem;
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      transition: all .3s var(--ease);
+      min-width: 200px;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      margin-top: 40px;
+      margin-left: 40px;
+    }
+    .payment-toggle::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #4ade80, #22c55e);
+      opacity: 0;
+      transition: opacity .3s;
+    }
+    .payment-toggle.active {
+      border-color: var(--gold);
+      box-shadow: 0 8px 24px rgba(244,240,176,.25);
+      transform: translateY(-2px);
+    }
+    .payment-toggle.active::before { opacity: 1; }
+    .payment-toggle.active i { stroke: #fff; }
+    .payment-toggle:hover:not(.active) {
+      background: rgba(244,240,176,.2);
+      border-color: var(--gold);
+      transform: translateY(-1px);
+    }
+
+
+.pay-row {
+  display: flex;
+  justify-content: center;   /* centers the buttons */
+  align-items: center;                 /* space between buttons */
+  margin-top: 40px;
+}
+
+.payment-togglex {
+      background: rgba(244,240,176,.1);
+      border: 1.5px solid rgba(244,240,176,.3);
+      color: var(--gold);
+      padding: .8rem 1.6rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: .95rem;
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      transition: all .3s var(--ease);
+      min-width: 200px;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      margin-left: 40px;
+    }
+    .payment-togglex::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #4ade80, #22c55e);
+      opacity: 0;
+      transition: opacity .3s;
+    }
+    .payment-togglex.active {
+      border-color: var(--gold);
+      box-shadow: 0 8px 24px rgba(244,240,176,.25);
+      transform: translateY(-2px);
+    }
+    .payment-togglex.active::before { opacity: 1; }
+    .payment-togglex.active i { stroke: #fff; }
+    .payment-togglex:hover:not(.active) {
+      background: rgba(244,240,176,.2);
+      border-color: var(--gold);
+      transform: translateY(-1px);
+    }
+
+
+
+.coinx-tagline {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;   /* spacing between logo & text */
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--gold);
+}
+
+.coinx-logo-wrap {
+  width: 62px;
+  height: 62px;
+  padding: 0.1px; /* ⭐ inner padding */
+  border-radius: 50%;
+  border: 2px solid rgba(244,240,176,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px rgba(244,240,176,0.35);
+
+  margin-bottom: 10px;
+}
+
+.coinx-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* keeps the image fully visible */
+  border-radius: 50%;
+}
+
+
+/* ===========================================
+   GLOBAL HOVER ANIMATIONS FOR ALL CONTAINERS
+   =========================================== */
+
+/* General glass cards */
+.chart-card,
+.trades-card,
+.position-panel,
+.pnl-box,
+.card,
+.coin-header,
+.left-column > *,
+.right-column > *,
+.table tr,
+.stat-item {
+  transition: all .35s ease;
+}
+
+/* Lift + glow on hover */
+.chart-card:hover,
+.trades-card:hover,
+.position-panel:hover,
+.card:hover,
+.coin-header:hover,
+.stat-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(244,240,176,0.20);
+  border-color: rgba(244,240,176,0.35) !important;
+}
+
+/* PnL Box hover glow */
+.pnl-box:hover {
+  transform: scale(1.04);
+  box-shadow: 0 12px 32px rgba(74,222,128,0.35);
+}
+
+/* Table row hover */
+.table tbody tr {
+  transition: background .25s ease;
+}
+.table tbody tr:hover {
+  background: rgba(244,240,176,0.07);
+}
+
+/* Stat-item pulse glow */
+.stat-item:hover {
+  background: rgba(244,240,176,0.12);
+}
+
+/* Swap Manager card hover */
+.card:hover {
+  background: rgba(244,240,176,0.07);
+}
+
+/* Payment buttons hover intensified */
+.payment-togglex:hover:not(.active),
+.payment-toggle:hover:not(.active) {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 10px 28px rgba(244,240,176,0.35);
+}
+
+/* Position grid item hover */
+.position-grid > div {
+  transition: all .3s ease;
+}
+.position-grid > div:hover {
+  transform: translateY(-6px) scale(1.05);
+  border-color: rgba(244,240,176,0.35);
+  box-shadow: 0 14px 30px rgba(244,240,176,0.20);
+}
