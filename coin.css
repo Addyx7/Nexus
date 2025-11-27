@@ -460,6 +460,7 @@
     }
     .payment-togglex.active {
       border-color: var(--gold);
+      background: linear-gradient(135deg, #4ade80, #22c55e);
       box-shadow: 0 8px 24px rgba(244,240,176,.25);
       transform: translateY(-2px);
     }
@@ -469,6 +470,60 @@
       background: rgba(244,240,176,.2);
       border-color: var(--gold);
       transform: translateY(-1px);
+    }
+
+
+
+    .payment-toggley {
+      background: rgba(244,240,176,.1);
+      border: 1.5px solid rgba(244,240,176,.3);
+      color: var(--gold);
+      padding: .4rem 1.6rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: .95rem;
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      transition: all .3s var(--ease);
+      min-width: 100px;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .payx-row {
+    display: flex;
+  align-items: center;   /* keeps BUY & SELL aligned perfectly */
+  justify-content: center; /* optional — centers them horizontally */
+  gap: 1rem; 
+   margin-top: 10px; /* adjust as needed */
+    margin-left: -260px; /* adjust as needed */
+}
+
+    .payment-toggley::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #4ade80, #22c55e);
+      opacity: 0;
+      transition: opacity .3s;
+    }
+    .payment-toggley:hover {
+  transform: translateY(-4px) scale(1.05);
+  background: rgba(244,240,176,.25);
+  border-color: var(--gold);
+  box-shadow: 0 12px 32px rgba(244,240,176,.3);
+  color: var(--gold);
+}
+    .payment-toggley.active {
+      box-shadow: 0 8px 24px rgba(244,240,176,.25);
+      transform: translateY(-2px);
+  background: rgba(244,240,176,.25);
+  color: var(--gold);
+  border-color: var(--gold);
+  font-weight: 700;
     }
 
 
