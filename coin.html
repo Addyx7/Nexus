@@ -164,25 +164,123 @@
     </div>
   </div>
 <br><br>
-      <!-- Swap Manager (exactly like your screenshot) -->
-    <div class="card" style="background: rgba(244,240,176,0.05);">
-      <div class="card-header" style="display:flex;justify-content:space-between;align-items:center;">
-        <h3><i data-lucide="arrow-up-down"></i> Swap Manager</h3>
-        <div>
- <div class="pay-row">
-  <button class="payment-togglex" id="paySolBtn1">
-    <img src="sol.svg" style="width:20px;height:20px;" alt="SOL"> Sell All +Dev
-  </button>
+    <!-- Swap Manager (exactly like your screenshot) -->
+<div class="card" style="background: rgba(244,240,176,0.05);">
+  <div class="card-header" style="display:flex;justify-content:space-between;align-items:center;">
+    <h3><i data-lucide="arrow-up-down"></i> Swap Manager</h3>
 
-  <button class="payment-togglex" id="paySolBtn2">
-    <img src="sol.svg" style="width:20px;height:20px;" alt="SOL"> Sell All -Dev
-  </button>
-</div>
+    <!-- SWITCH BUTTON (BUY / SELL) -->
+    <div class="payx-row">
+      <button class="payment-toggley active" id="modeBuy">BUY</button>
+      <button class="payment-toggley" id="modeSell">SELL</button>
+    </div>
 
+    <div>
+      <div class="pay-row">
+        <button class="payment-togglex" id="paySolBtn1">
+          <img src="sol.svg" style="width:20px;height:20px;" alt="SOL"> Sell All +Dev
+        </button>
+        <button class="payment-togglex" id="paySolBtn2">
+          <img src="sol.svg" style="width:20px;height:20px;" alt="SOL"> Sell All -Dev
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==== CONTENT THAT CHANGES ==== -->
+  <div id="swapContent">
+    <!-- SELL CONTENT (default) -->
+    <div id="sellMode" class="swap-mode" style="display:none;">
+
+      <!-- Launch Buys -->
+      <div style="margin-top:1.5rem;">
+        <h4 style="margin-bottom:.8rem;">Launch Sells <small style="color:var(--text-muted);">3 wallets</small></h4>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>WALLET</th>
+              <th></th>
+              <th>SOL</th>
+              <th>BALANCE</th>
+              <th>%</th>
+              <th>ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="wallet-tag dev">DEV</span></td>
+              <td style="color:var(--profit);">+0.01%</td>
+              <td class="sol-amount">0.10 SOL</td>
+              <td>0</td>
+              <td>0%</td>
+              <td>
+                <button class="percent-btn">25%</button>
+                <button class="percent-btn">50%</button>
+                <button class="percent-btn">75%</button>
+                <button class="percent-btn">100%</button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="wallet-tag distro">W2</span></td>
+              <td style="color:var(--loss);">-0.66%</td>
+              <td class="sol-amount">0.12 SOL</td>
+              <td>0</td>
+              <td>0%</td>
+              <td>
+                <button class="percent-btn">25%</button>
+                <button class="percent-btn">50%</button>
+                <button class="percent-btn">75%</button>
+                <button class="percent-btn">100%</button>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="wallet-tag distro">W3</span></td>
+              <td style="color:var(--loss);">-0.37%</td>
+              <td class="sol-amount">0.12 SOL</td>
+              <td>0</td>
+              <td>0%</td>
+              <td>
+                <button class="percent-btn">25%</button>
+                <button class="percent-btn">50%</button>
+                <button class="percent-btn">75%</button>
+                <button class="percent-btn">100%</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+<div style="text-align:right;margin-top:.8rem;">
+        <button class="payment-toggle" id="paySolBtn" style="margin-left:960px">
+          <img src="sol.svg" style="width:20px;height:20px;" alt="SOL"> Sell All
+        </button>
+        </div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:2rem 0;">
+
+      <!-- Other Wallets -->
+      <div>
+        <h4 style="margin-bottom:.8rem;">Other Wallets <small style="color:var(--text-muted);">5 wallets</small></h4>
+        <table class="table">
+          <tbody>
+            <tr><td>W6</td><td></td><td>0.00 SOL</td><td>0</td><td>0%</td><td><button class="percent-btn">25%</button> <button class="percent-btn">50%</button> <button class="percent-btn">75%</button> <button class="percent-btn">100%</button></td></tr>
+            <tr><td>W7</td><td></td><td>0.00 SOL</td><td>0</td><td>0%</td><td><button class="percent-btn">25%</button> <button class="percent-btn">50%</button> <button class="percent-btn">75%</button> <button class="percent-btn">100%</button></td></tr>
+            <tr><td>W8</td><td></td><td>0.00 SOL</td><td>0</td><td>0%</td><td><button class="percent-btn">25%</button> <button class="percent-btn">50%</button> <button class="percent-btn">75%</button> <button class="percent-btn">100%</button></td></tr>
+            <tr><td>W9</td><td></td><td>0.00 SOL</td><td>0</td><td>0%</td><td><button class="percent-btn">25%</button> <button class="percent-btn">50%</button> <button class="percent-btn">75%</button> <button class="percent-btn">100%</button></td></tr>
+            <tr><td>W10</td><td></td><td>0.00 SOL</td><td>0</td><td>0%</td><td><button class="percent-btn">25%</button> <button class="percent-btn">50%</button> <button class="percent-btn">75%</button> <button class="percent-btn">100%</button></td></tr>
+          </tbody>
+        </table>
+        <div style="text-align:right;margin-top:.8rem;">
+          <button class="payment-toggle" id="paySolBtn" style="margin-left:960px">
+          <img src="sol.svg" style="width:20px;height:20px;" alt="SOL"> Sell All
+        </button>
         </div>
       </div>
 
-      <!-- Launch Buys -->
+    </div>
+
+
+    <!-- BUY CONTENT (hidden by default) -->
+    <div id="buyMode" class="swap-mode">
+           <!-- Launch Buys -->
       <div style="margin-top:1.5rem;">
         <h4 style="margin-bottom:.8rem;">Launch Buys <small style="color:var(--text-muted);">3 wallets</small></h4>
         <table class="table">
@@ -238,13 +336,12 @@
             </tr>
           </tbody>
         </table>
-        <div style="text-align:right;margin-top:.8rem;">
+<div style="text-align:right;margin-top:.8rem;">
         <button class="payment-toggle" id="paySolBtn" style="margin-left:960px">
-          <img src="sol.svg" style="width:20px;height:20px;" alt="SOL"> Sell All
+          <img src="sol.svg" style="width:20px;height:20px;" alt="SOL"> Buy All
         </button>
         </div>
       </div>
-
       <hr style="border:none;border-top:1px solid var(--border);margin:2rem 0;">
 
       <!-- Other Wallets -->
@@ -261,11 +358,13 @@
         </table>
         <div style="text-align:right;margin-top:.8rem;">
           <button class="payment-toggle" id="paySolBtn" style="margin-left:960px">
-          <img src="sol.svg" style="width:20px;height:20px;" alt="SOL"> Sell All
+          <img src="sol.svg" style="width:20px;height:20px;" alt="SOL"> Buy All
         </button>
         </div>
       </div>
-
+    </div>
+  </div>
+</div>
     
 
     </div>
@@ -311,6 +410,23 @@
         }
       }
     });
+
+
+
+    // ====================== SWAP MODE SWITCH (BUY / SELL) ======================
+document.getElementById('modeBuy').addEventListener('click', () => {
+  document.getElementById('modeBuy').classList.add('active');
+  document.getElementById('modeSell').classList.remove('active');
+  document.getElementById('buyMode').style.display = 'block';
+  document.getElementById('sellMode').style.display = 'none';
+});
+
+document.getElementById('modeSell').addEventListener('click', () => {
+  document.getElementById('modeSell').classList.add('active');
+  document.getElementById('modeBuy').classList.remove('active');
+  document.getElementById('sellMode').style.display = 'block';
+  document.getElementById('buyMode').style.display = 'none';
+});
   </script>
 </body>
 

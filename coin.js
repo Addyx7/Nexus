@@ -3,7 +3,6 @@ lucide.createIcons();
 
 let pumpChart = null;
 
-// REAL LIVE TOKEN: Grok (GROK) on pump.fun
 const CA = "3gsmySNUPuwUgHUUxKA7GoN2fyuvHyU1pR5eW9G8Vpump";
 
 async function renderPumpChart(ca) {
@@ -69,11 +68,9 @@ async function renderPumpChart(ca) {
   }
 }
 
-// Load chart on start + refresh every 12 seconds
 renderPumpChart(CA);
 setInterval(() => renderPumpChart(CA), 12000);
 
-// ================== COPY CONTRACT ADDRESS ==================
 document.getElementById('caBox')?.addEventListener('click', async () => {
   await navigator.clipboard.writeText(CA);
   const icon = document.querySelector('#caBox i');
@@ -85,7 +82,6 @@ document.getElementById('caBox')?.addEventListener('click', async () => {
   }, 1500);
 });
 
-// ================== SOL PRICE TICKER ==================
 const updateSol = async () => {
   try {
     const r = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd');
@@ -95,3 +91,40 @@ const updateSol = async () => {
 };
 updateSol();
 setInterval(updateSol, 10000);
+
+// BUY / SELL SWITCH (only new part)
+document.getElementById('modeBuy')?.addEventListener('click', () => {
+  document.getElementById('modeBuy').classList.add('active');
+  document.getElementById('modeSell').classList.remove('active');
+  document.getElementById('buyMode').style.display = 'block';
+  document.getElementById('sellMode').style.display = 'none';
+});
+
+document.getElementById('modeSell')?.addEventListener('click', () => {
+  document.getElementById('modeSell').classList.add('active');
+  document.getElementById('modeBuy').classList.remove('active');
+  document.getElementById('sellMode').style.display = 'block';
+  document.getElementById('buyMode').style.display = 'none';
+});
+
+const btn1 = document.getElementById("paySolBtn1");
+const btn2 = document.getElementById("paySolBtn2");
+
+function updateButtons(mode) {
+  if (mode === "BUY") {
+    btn1.innerHTML = `<img src="sol.svg" style="width:20px;height:20px;"> Buy All +Dev`;
+    btn2.innerHTML = `<img src="sol.svg" style="width:20px;height:20px;"> Buy All -Dev`;
+  } else {
+    btn1.innerHTML = `<img src="sol.svg" style="width:20px;height:20px;"> Sell All +Dev`;
+    btn2.innerHTML = `<img src="sol.svg" style="width:20px;height:20px;"> Sell All -Dev`;
+  }
+}
+
+// hook into your buttons
+document.getElementById("modeBuy").addEventListener("click", () => {
+  updateButtons("BUY");
+});
+
+document.getElementById("modeSell").addEventListener("click", () => {
+  updateButtons("SELL");
+});
